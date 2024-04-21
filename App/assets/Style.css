@@ -1,0 +1,33 @@
+/*Navbar*/
+.navbar{
+    background: rgb(122, 204, 207);
+    width: 100%;
+}
+.title-navbar{
+    font-size: x-large;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+}
+.Div-Logo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dropdown{
+    text-align: center;
+    font-size: larger;
+}
+.items_dropdown{
+    font-size: large;
+}
+.container_navbar{
+    width: 100%;
+}
+.mr{
+    margin-right: 150px;
+}
+.backgroundNavbar{
+    background: rgb(122, 204, 207);
+}

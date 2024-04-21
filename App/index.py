@@ -11,13 +11,14 @@ from pages import analisis, modelo,home
 
 dropdown = dbc.DropdownMenu(
     children=[
-        dbc.DropdownMenuItem("Inicio", href="/home"),
-        dbc.DropdownMenuItem("Analisis", href="/analisis"),
-        dbc.DropdownMenuItem("Modelo", href="/admision"),
+        dbc.DropdownMenuItem("Inicio", href="/home",    className='text-xlarge'),
+        dbc.DropdownMenuItem("Analisis", href="/analisis",    className='text-xlarge'),
+        dbc.DropdownMenuItem("Modelo", href="/admision",    className='text-xlarge'),
     ],
     nav = True,
     in_navbar = True,
     label = "Secciones",
+    className='text-xlarge'
 )
 
 navbar = dbc.Navbar(
@@ -27,15 +28,14 @@ navbar = dbc.Navbar(
                 # Use row and col to control vertical alignment of logo / brand
                 dbc.Row(
                     [
-                        dbc.Col(html.Img(src="assets/logo_espol.png", height="30px")),
-                        dbc.Col(dbc.NavbarBrand("ESPOL DASHBOARD",)),
+                        dbc.Col(html.Img(src="assets/images/wids-logo.png", height="70px",width='200px')),
+                        dbc.Col(dbc.NavbarBrand("WIDS DATATHON 2024",className='title-navbar')),
                     ],
                     align='center',
                     justify='center'
-
                 ),
                 href="/home",
-                style={'width':'71vw'}
+                style={'width':'71vw'},className='mr'
             ),
             dbc.NavbarToggler(id="navbar-toggler2"),
             dbc.Collapse(
@@ -50,8 +50,7 @@ navbar = dbc.Navbar(
         ]
     ),
     style={'justifyContent':'spaceEvenly'},
-    color="dark",
-    dark=True,
+    color='Info',
     className="mb-4",
 )
 
