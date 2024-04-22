@@ -2,6 +2,9 @@
 .navbar{
     background: rgb(122, 204, 207);
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .title-navbar{
     font-size: x-large;
@@ -9,6 +12,8 @@
     font-weight: bold;
     text-decoration: none;
     text-align: center;
+    justify-content: space-evenly;
+    margin-left: 250px;
 }
 .Div-Logo{
     display: flex;
@@ -25,9 +30,7 @@
 .container_navbar{
     width: 100%;
 }
-.mr{
-    margin-right: 150px;
-}
 .backgroundNavbar{
     background: rgb(122, 204, 207);
 }
+
