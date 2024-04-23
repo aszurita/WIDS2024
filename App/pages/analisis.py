@@ -33,19 +33,19 @@ div_graficas_features = html.Div([
         ],className='center_col feature')
     ],className='w-all center_row_around'),
     html.Div([
-        html.Label('Agrupar' ,htmlFor='column-dropdown3',className='labels'),
-        dcc.Dropdown(
-                id='column-dropdown3',
-                options=[{'label': col, 'value': col} for col in training_df.columns],
-                className='dropdown-feature'
-            ),
-        html.Div(id='histograma-feature3')
-    ],className='center_col feature')
-],className='center_col gap_20')
+        html.Div([
+            html.Label('Agrupar' ,htmlFor='column-dropdown3',className='labels'),
+            dcc.Dropdown(
+                    id='column-dropdown3',
+                    options=[{'label': col, 'value': col} for col in training_df.columns],
+                    className='dropdown-feature'
+                ),
+            html.Div(id='histograma-feature3')
+        ],className='center_col feature'),
+        html.Div(id='div_scatter',className='center_col feature'),
+    ],className='w-all center_row_around'),
+],className='center_col gap_30 mt-30')
 
-scatter_general = html.Div(id='div_scatter')
-
-div_grafica = html.Div([div_graficas_features,scatter_general],className='center_col')
 
 
 button = html.Div(dbc.Button('Graficar',id='button-graficar',className='button-graficar'))
@@ -83,7 +83,7 @@ def div_graficar_col(col1):
     fig  = ''
     if col1 : 
         if training_df[col1].dtype == object : 
-            fig = dcc.Graph(figure=bar(col1))
+            fig = [dcc.Graph(figure=bar(col1))]
         else :
             fig =  dcc.Graph(figure=histogram(col1))
     else : 
@@ -94,9 +94,9 @@ def div_scatter(col1,col2,color):
     fig= ''
     if col1 or col2 : 
         if col1 : 
-            fig = [dcc.Graph(figure=scatter(col1,col2,color))]
+            fig = [html.Label('Resultado',className='labels'),dcc.Graph(figure=scatter(col1,col2,color))]
         else:
-            fig = [dcc.Graph(figure=scatter(col2,col1,color))]
+            fig = [html.Label('Resultado',className='labels'),dcc.Graph(figure=scatter(col2,col1,color))]
     else : 
         fig  = html.Div()
     return fig
@@ -127,6 +127,6 @@ def graficar_scatter(n_clicks,col1,col2,color):
     return fig1,fig2,fig3,fig4
 
 layout = html.Div(
-    [titulo,div_grafica,button]
+    [titulo,div_graficas_features,button]
     ,className='center body'
     )

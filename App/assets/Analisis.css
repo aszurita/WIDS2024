@@ -58,7 +58,7 @@
 
 .button-graficar{
     position: absolute;
-    top: 50px;
+    top: 75px;
     right: 100px;
     padding: 10px;
     border-radius: 25%;
@@ -66,4 +66,8 @@
     width: 150px;
     font-size: large;
     font-weight: bold;
+}
+
+.mt-30{
+    margin-top: 30px;
 }
