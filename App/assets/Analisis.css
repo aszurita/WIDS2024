@@ -1,3 +1,22 @@
+.row_header{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 20px;
+}
+.link{
+    font-size: x-large;
+    font-weight: bold;
+    transition: border-bottom  1.0s ease-in-out;
+    border-bottom: 10px solid transparent;
+    text-decoration: none;
+}
+
+.link:hover{
+    border-bottom: 5px solid currentColor;
+}
+
 .titutlo-analisis{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 70px;
@@ -52,14 +71,14 @@
     gap: 30px;
 }
 
-.body{
+.body_graficas{
     position: relative;
 }
 
 .button-graficar{
     position: absolute;
-    top: 75px;
-    right: 100px;
+    top: 65px;
+    right: 10px;
     padding: 10px;
     border-radius: 25%;
     background-color: rgb(73, 213, 159);
@@ -77,4 +96,30 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap:30px
 }  
+
+
+.title_Corre{
+    font-size: xx-large;
+    font-weight: bold;
+    margin: 70px 0px 0px 0px;
+}
+.subtitle{
+    font-size: large;
+    font-weight: bold;
+}
+.title_Corre2{
+    font-size: xx-large;
+    font-weight: bold;
+    margin: 70px 0px 40px 0px;
+}
+.body{
+    user-select: none;
+    padding-bottom: 30px;
+}
+.div_resultado{
+    gap:70px
+
+}
+

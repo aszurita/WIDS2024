@@ -68,7 +68,7 @@ app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     navbar,
     html.Div(id='page-content')
-])
+],className='background')
 
 
 @app.callback(Output('page-content', 'children'),
