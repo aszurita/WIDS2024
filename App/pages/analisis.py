@@ -11,6 +11,27 @@ titulo  =  html.H1("ANÁLISIS EXPLORATORIO DE DATOS".title(),className='titutlo-
 
 training_df  = pd.read_csv("assets/data/training.csv")
 # Div Dos Drowpdown y scatter plot que representa la correlación
+
+div_correlation = html.Div([
+    html.H3('Correlaciónes'),
+    dcc.Dropdown(
+                id='column-corr-f1',
+                options=[{'label': col, 'value': col} for col in training_df.columns],
+                className='dropdown-feature'
+            ),
+    html.P('Top 10 con mayor correlación :')
+],className='div_correlation')
+
+
+
+
+
+
+
+
+
+
+
 div_graficas_features = html.Div([
     html.Div([
         html.Div([
@@ -37,7 +58,7 @@ div_graficas_features = html.Div([
             html.Label('Agrupar' ,htmlFor='column-dropdown3',className='labels'),
             dcc.Dropdown(
                     id='column-dropdown3',
-                    options=[{'label': col, 'value': col} for col in training_df.columns],
+                    options=[{'label': col, 'value': col} for col in (training_df.columns.to_list()+['frecuencia'])],
                     className='dropdown-feature'
                 ),
             html.Div(id='histograma-feature3')
@@ -50,15 +71,6 @@ div_graficas_features = html.Div([
 
 button = html.Div(dbc.Button('Graficar',id='button-graficar',className='button-graficar'))
 
-def scatter(col1,col2,color=None):
-    col1_ = col1 or ''
-    col2_ = col2 or ''
-    color_label = color or ''
-    fig = px.scatter(training_df, x=col1 , y=col2 ,color=color,
-                            color_discrete_sequence = px.colors.qualitative.Plotly,
-                            title=f"{col1_.upper()} VS {col2_.upper()}",
-                            labels={col1:col1_.upper(),col2:col2_.upper(),color:color_label.upper()})
-    return fig
 def histogram(col1):
     fig = px.histogram(training_df, x=col1 , marginal='box',
                         color_discrete_sequence = px.colors.qualitative.Pastel,
@@ -78,28 +90,64 @@ def bar(col1):
                 labels={col1:col1.upper()})
     return fig
 
+def scatter(col1,col2,color=None):
+    col1_ = col1 or ''
+    col2_ = col2 or ''
+    color_label = color or ''
+    fig = px.scatter(training_df, x=col1 , y=col2 ,color=color,
+                            color_discrete_sequence = px.colors.qualitative.Plotly,color_continuous_scale='tealgrn',
+                            title=f"{col1_.upper()} VS {col2_.upper()}",
+                            labels={col1:col1_.upper(),col2:col2_.upper(),color:color_label.upper()})
+    return fig
+
+def scatter_frecuencia(col1,col2,color):
+    if col1 and col2 and col1!=col2 : 
+        df = training_df.groupby([col1,col2])[[col1,col2]].value_counts().reset_index()
+        df.columns=[col1,col2,'frecuencia']
+    elif col1 and not col2 :
+        df = training_df.groupby([col1])[[col1]].value_counts().reset_index()
+        df.columns=[col1,'frecuencia']
+    else :
+        df = training_df.groupby([col2])[[col2]].value_counts().reset_index()
+        df.columns=[col2,'frecuencia']
+    col1_ = col1 or ''
+    col2_ = col2 or ''
+    color_label = color or ''
+    fig = px.scatter(df, x=col1 , y=col2 ,color=color,
+                            color_discrete_sequence = px.colors.qualitative.Plotly,
+                            color_continuous_scale='tealgrn',size=color,
+                            title=f"{col1_.upper()} VS {col2_.upper()}",
+                            labels={col1:col1_.upper(),col2:col2_.upper(),color:color_label.upper()})
+    return fig
 
 def div_graficar_col(col1):
-    fig  = ''
-    if col1 : 
-        if training_df[col1].dtype == object : 
-            fig = [dcc.Graph(figure=bar(col1))]
-        else :
-            fig =  dcc.Graph(figure=histogram(col1))
-    else : 
-        fig  = html.Div()
-    return fig
+    if not col1:
+        return html.Div() 
+    if col1 == 'frecuencia' :
+        return html.Div(html.Img(src='assets/images/Frecuencia.png',width=350,height=300)) 
+    if training_df[col1].dtype == 'object':
+        graph = dcc.Graph(figure=bar(col1))
+    else:
+        graph = dcc.Graph(figure=histogram(col1))
+    return graph
 
-def div_scatter(col1,col2,color):
-    fig= ''
-    if col1 or col2 : 
-        if col1 : 
-            fig = [html.Label('Resultado',className='labels'),dcc.Graph(figure=scatter(col1,col2,color))]
-        else:
-            fig = [html.Label('Resultado',className='labels'),dcc.Graph(figure=scatter(col2,col1,color))]
-    else : 
-        fig  = html.Div()
-    return fig
+def div_scatter(col1, col2, color):
+
+    if not col1 and not col2:
+        return html.Div()
+    
+    if color == 'frecuencia':
+        function = scatter_frecuencia
+    else:
+        function = scatter
+    
+    primary_col = col1 if col1 else col2
+    secondary_col = col2 if col1 else col1
+    graph = dcc.Graph(figure=function(primary_col, secondary_col, color))
+    label = html.Label('Resultado', className='labels')
+
+    return [label, graph]
+
 
 
 @app.callback(

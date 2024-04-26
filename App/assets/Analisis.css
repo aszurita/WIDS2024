@@ -71,3 +71,10 @@
 .mt-30{
     margin-top: 30px;
 }
+
+.div_correlation{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}  
