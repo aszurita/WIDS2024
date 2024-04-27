@@ -28,14 +28,12 @@ navbar = dbc.Navbar(
                 # Use row and col to control vertical alignment of logo / brand
                 dbc.Row(
                     [
-                        dbc.Col(html.Img(src="assets/images/wids-logo.png", height="70px",width='200px')),
+                        dbc.Col(html.Img(src="assets/images/wids-logo.png", height="70px",width='200px')),                   
                         dbc.Col(dbc.NavbarBrand("WIDS DATATHON 2024",className='title-navbar')),
                     ],
                     align='center',
-                    justify='center'
                 ),
                 href="/home",
-                style={'width':'71vw'},className='mr'
             ),
             dbc.NavbarToggler(id="navbar-toggler2"),
             dbc.Collapse(
@@ -45,13 +43,12 @@ navbar = dbc.Navbar(
                 ),
                 id="navbar-collapse2",
                 navbar=True,
-                style={'justifyContent':'flex-end',},
+                style={'justifyContent':'flex-end'},
             ),
         ]
     ),
-    style={'justifyContent':'spaceEvenly'},
     color='Info',
-    className="mb-4",
+    className="navbar",
 )
 
 def toggle_navbar_collapse(n, is_open):
@@ -71,7 +68,7 @@ app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     navbar,
     html.Div(id='page-content')
-])
+],className='background')
 
 
 @app.callback(Output('page-content', 'children'),
