@@ -1,3 +1,13 @@
+/*
+CSV 
+c8e9ee,21acce,facb0e,44bb6c,5ac4db,77ccdd,7ebe56,28ad9c,3ccce4
+Array 
+["c8e9ee","21acce","facb0e","44bb6c","5ac4db","77ccdd","7ebe56","28ad9c","3ccce4"]
+*/
+
+
+
+
 .row_header{
     width: 100%;
     display: flex;
@@ -123,3 +133,83 @@
 
 }
 
+/* Div Features*/
+.div_feature{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 275px;
+    border-radius: 20px;
+}
+.div_features{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+    border-radius: 15px;
+    gap: 50px;
+}
+.label_features{
+    font-size: x-large;
+    font-weight: bold;
+    border-radius: 30px;
+}
+.features{
+    width: 600px;
+    height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    gap: 30px;
+    justify-content: center;
+}
+.div_tiposdatos{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:50px
+}
+.center_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+}
+.Categoricas{
+    background-color: #1d95b3;
+    padding: 20px 0px;
+}
+.Numericas{
+    background-color: #44bb6c;
+    padding: 20px 0px;
+}
+.center_figure{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.div_resumen_general{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    padding: 30px 0px;
+}
+.resumen{
+    height:600px;
+    width: 100%;
+    padding: 0px 0px 30px 0px;
+    overflow-y: scroll;
+}
+.texto{
+    font-size: large;
+    font-weight: bold;
+}

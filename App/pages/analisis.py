@@ -5,12 +5,15 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 from app import app
-
+from summarytools import dfSummary
+from dash_dangerously_set_inner_html import DangerouslySetInnerHTML
+import warnings
+warnings.filterwarnings('ignore')
 
 links = html.Div([
+    html.A(html.Label('Datos',className='link'),href='#datos'),
     html.A(html.Label('Correlaciones',className='link'),href='#correlacion'),
     html.A(html.Label('Distribuciones',className='link'),href='#distribucion'),
-    html.A(html.Label('Seccion3',className='link'),href='#id3'),
     html.A(html.Label('Seccion4',className='link'),href='#id4'),
 ],className='row_header')
 
@@ -20,20 +23,59 @@ links = html.Div([
 titulo  =  html.H1("ANÁLISIS EXPLORATORIO DE DATOS".title(),className='titutlo-analisis')
 
 
-
-
-
 training_df  = pd.read_csv("assets/data/training.csv")
-# Div Dos Drowpdown y scatter plot que representa la correlación
-
-
 df_encoder = pd.read_csv('assets/data/df_encoder.csv')
-correlaciones = df_encoder.corr()['payer_type'].reset_index()
-correlaciones.columns = ['Features','Correlación']
-correlaciones['Correlación'] = abs(correlaciones['Correlación']).round(4)
-correlaciones = correlaciones.sort_values('Correlación',ascending=False)
-correlaciones = correlaciones[0:10]
 
+def div_feature(feature):
+    return html.Div(feature,className='div_feature')
+
+object_cols = list(training_df.select_dtypes(include='object').columns)
+number_cols = list(training_df.select_dtypes(exclude='object').columns)
+
+def div_listfeatures(type,list_features):
+    className_extra = ' '
+    if type == 'Categóricas' : 
+        className_extra = 'Categoricas'
+    else : 
+        className_extra = 'Numericas'
+    htmls = [ div_feature(col) for col in list_features]
+    result = html.Div([
+        html.Label(type,className='label_features'),
+        html.Div(htmls,className='features')
+    ],className=f'div_features {className_extra}')
+    return result
+
+def bar_tipoDatos():
+    df_tipodatos = pd.DataFrame({
+        'Tipo' : ['Object','Number'],
+        'Values':[len(object_cols),len(number_cols)]
+    })
+    df_tipodatos['Porcentaje'] = (df_tipodatos['Values'] / len(training_df.columns)).round(2)
+    fig = px.bar(df_tipodatos, x='Tipo', y='Values' ,color='Tipo',
+        title='TIPOS DE DATOS',height=455,color_discrete_sequence = px.colors.qualitative.Pastel,
+        text_auto =True, hover_name='Tipo', hover_data={'Porcentaje':True,'Tipo':False})
+    return fig
+
+
+tipo_datos = html.Div([
+    html.H3('Tipos De Datos',className='title_Corre'),
+    html.Div([
+        dcc.Graph(figure=bar_tipoDatos())
+    ],className='center_figure'),
+    html.Div([
+        div_listfeatures('Categóricas',object_cols),
+        div_listfeatures('Numéricas',number_cols),
+    ],className='div_tiposdatos')
+],className='center_div',id='datos')
+
+summary = dfSummary(training_df)
+summary_html = summary.to_html()
+
+fast_analisis = html.Div([
+    html.H1("Análisis Rapido",className='title_Corre'),
+    html.H1("Podemos visualizar un análisis rápido de todas las características, como valores estadísticos, valores únicos, valores faltantes, etc.",className='texto'),
+    html.Div(DangerouslySetInnerHTML(summary_html),className='resumen')
+],className='div_resumen_general')
 
 
 div_correlation = html.Div([
@@ -58,7 +100,6 @@ def table_correlacion(col):
         correlaciones.columns = ['Features','Correlación']
         correlaciones['Correlación'] = abs(correlaciones['Correlación']).round(4)
         correlaciones = correlaciones.sort_values('Correlación',ascending=False)
-        correlaciones = correlaciones[0:10]
         return  dash_table.DataTable(
             id='table',
             columns=[{"name": i, "id": i} for i in correlaciones.columns],
@@ -143,7 +184,7 @@ def scatter(col1,col2,color=None):
     col2_ = col2 or ''
     color_label = color or ''
     fig = px.scatter(training_df, x=col1 , y=col2 ,color=color,
-                            color_discrete_sequence = px.colors.qualitative.Plotly, color_continuous_scale='tealgrn',
+                            color_discrete_sequence = px.colors.qualitative.Pastel, color_continuous_scale='tealgrn',
                             title=f"{col1_.upper()} VS {col2_.upper()}",height=455,
                             labels={col1:col1_.upper(),col2:col2_.upper(),color:color_label.upper()})
     return fig
@@ -162,7 +203,7 @@ def scatter_frecuencia(col1,col2,color):
     col2_ = col2 or ''
     color_label = color or ''
     fig = px.scatter(df, x=col1 , y=col2 ,color=color,
-                            color_discrete_sequence = px.colors.qualitative.Plotly,
+                            color_discrete_sequence = px.colors.qualitative.Pastel,
                             color_continuous_scale='tealgrn',size=color,
                             title=f"{col1_.upper()} VS {col2_.upper()}",height=455,
                             labels={col1:col1_.upper(),col2:col2_.upper(),color:color_label.upper()})
@@ -226,6 +267,6 @@ def graficar_scatter(n_clicks,col1,col2,color):
 
 final = html.Div([],className='final')
 layout = html.Div(
-    [links,titulo,div_correlation,div_graficas_features,final]
+    [links,titulo,tipo_datos,fast_analisis,div_correlation,div_graficas_features,final]
     ,className='center body'
     )
