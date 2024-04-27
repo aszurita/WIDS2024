@@ -5,11 +5,14 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 from app import app
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 titulo  =  html.H1("ANÁLISIS EXPLORATORIO DE DATOS".title(),className='titutlo-analisis')
 
 
 training_df  = pd.read_csv("assets/data/training.csv")
+corre_df=pd.read_csv("assets/data/correlaciones.csv")
 # Div Dos Drowpdown y scatter plot que representa la correlación
 div_graficas_features = html.Div([
     html.Div([
@@ -126,7 +129,48 @@ def graficar_scatter(n_clicks,col1,col2,color):
         fig4 = div_scatter(col1,col2,color)  
     return fig1,fig2,fig3,fig4
 
+subTitulo=html.Div(html.H2("Correlaciones".title(),className='subtitutlo-analisis'),className='left-align')
+
+def armar_scatter(df_corre,label,df):
+  fig = make_subplots(rows=2, cols=2)
+  df_corre = df_corre[df_corre['source']==label]
+  for x in range(2):
+    for y in range(2):
+      if x==0 and 0 <= y < df_corre.shape[0]:
+        fig.add_trace(go.Scatter(x=df[label], y=df[df_corre.iloc[y]['target']],mode='markers',name=df_corre.iloc[y]['value']),row=x+1, col=y+1)
+        fig.update_xaxes(title_text=label, row=x+1, col=y+1)
+        fig.update_yaxes(title_text=df_corre.iloc[y]['target'], row=x+1, col=y+1)
+      elif 2 <= y+2 < df_corre.shape[0]:
+        fig.add_trace(go.Scatter(x=df[label], y=df[df_corre.iloc[y+2]['target']],mode='markers',name=df_corre.iloc[y+2]['value']),row=x+1, col=y+1)
+        fig.update_xaxes(title_text=label, row=x+1, col=y+1)
+        fig.update_yaxes(title_text=df_corre.iloc[y+2]['target'], row=x+1, col=y+1)
+      else: continue
+  fig.update_layout( title_text=f'Mapas de distribucion',width=1000,height=800,showlegend=True)
+  return fig
+
+div_graficorre=html.Div([
+        html.Div([
+            html.Label('Feature',className='labels'),
+            dcc.Dropdown(corre_df['source'].unique(), id='dropdown1Corre',className='dropdown-feature',value='population'),
+        ]),
+        html.Div([
+            dcc.Graph(id='figs_graficas')])
+    ],className='center')
+def spliDataCorre(value):
+    return value
+    
+analisi_corre=html.Div([
+        html.Div(id='mayorCorrela')
+    ])
+@app.callback(
+    [Output('mayorCorrela', 'children'),
+    Output('figs_graficas', 'figure')],
+    Input('dropdown1Corre', 'value'))
+
+def update_graph(value):
+    return value,armar_scatter(corre_df,value,training_df)
+
 layout = html.Div(
-    [titulo,div_grafica,button]
+    [titulo,div_grafica,button,subTitulo,div_graficorre,analisi_corre]
     ,className='center body'
-    )
+    )   
