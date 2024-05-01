@@ -1,0 +1,26 @@
+[
+    {
+        "id": "Modelo1",
+        "titulo": "Gradient Boosting Classifier",
+        "info": "info",
+        "accuracy" : 0.8145661157024794,
+        "confusion_matrix" : [ 844,102,616,2310],
+        "parametros" : "assets/images/images_model/gbc.png"
+    },
+    {
+        "id": "Modelo2",
+        "titulo": "XGBOOST Classifier",
+        "info": "info",
+        "accuracy" : 0.8150826446280992,
+        "confusion_matrix" : [842,98,618,2314],
+        "parametros" : "assets/images/images_model/xgbC.png"
+    },
+    {
+        "id": "Modelo3",
+        "titulo": "CatBoost Classifier",
+        "info": "info",
+        "accuracy" : 0.8163739669421488,
+        "confusion_matrix" : [837,88,623,2324],
+        "parametros" : "assets/images/images_model/cbc.png"
+    }
+]
