@@ -13,7 +13,7 @@ dropdown = dbc.DropdownMenu(
     children=[
         dbc.DropdownMenuItem("Inicio", href="/home",    className='text-xlarge'),
         dbc.DropdownMenuItem("Analisis", href="/analisis",    className='text-xlarge'),
-        dbc.DropdownMenuItem("Modelo", href="/admision",    className='text-xlarge'),
+        dbc.DropdownMenuItem("Modelo", href="/modelo",    className='text-xlarge'),
     ],
     nav = True,
     in_navbar = True,
