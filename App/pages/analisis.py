@@ -4,7 +4,10 @@ from dash.exceptions import PreventUpdate
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
+import warnings
+warnings.filterwarnings('ignore')
 from app import app
+
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
@@ -156,19 +159,58 @@ div_graficorre=html.Div([
         html.Div([
             dcc.Graph(id='figs_graficas')])
     ],className='center')
-def spliDataCorre(value):
-    return value
-    
-analisi_corre=html.Div([
-        html.Div(id='mayorCorrela')
-    ])
-@app.callback(
-    [Output('mayorCorrela', 'children'),
-    Output('figs_graficas', 'figure')],
-    Input('dropdown1Corre', 'value'))
 
-def update_graph(value):
-    return value,armar_scatter(corre_df,value,training_df)
+def maxCorre(df,label):
+    dfFil = df[df['source'] == label]
+    idmax = dfFil['value'].abs().idxmax()
+    rowdata = dfFil.loc[idmax]
+    return rowdata
+
+def sinOutlier(df, label):
+    Q1 = df[label].quantile(0.25)
+    Q3 = df[label].quantile(0.75)
+    IQR = Q3 - Q1
+    limiInfe = Q1 - 1.5 * IQR
+    limiSupe = Q3 + 1.5 * IQR
+    df_filtered = df[(df[label] >= limiInfe) & (df[label] <= limiSupe)].copy()
+    df[:] = df_filtered
+    df.reset_index(drop=True, inplace=True)
+
+def gfScaBox(df, label1, label2, categ,titulo):
+    fig = px.scatter(df, x=label1, y=label2, color=categ, marginal_y="box",
+                     marginal_x="box")
+    fig.update_layout(width=720, title=titulo,height=500)
+    return fig
+
+analisi_corre=html.Div([
+        html.Label('Mayor Correlación ',className='labels'), 
+        html.Div([
+            html.Br(),
+            html.Div(id='colMayorCorr',  className='labels'),
+            html.Br(),
+            dcc.Dropdown(['patient_race','payer_type','Region','Division'], id='drdw2Corre',className='dropdown-feature',value='patient_race'),
+            html.Br()
+        ]),
+        html.Div([
+            dcc.Graph(id='fig_posi'),
+            dcc.Graph(id='fig_nega'),
+        ],className='row_gr')
+    ],className='center')
+@app.callback(
+    [Output('colMayorCorr', 'children'),
+    Output('figs_graficas', 'figure'),
+    Output('fig_posi', 'figure'),
+    Output('fig_nega', 'figure')],
+    [Input('dropdown1Corre', 'value'),
+     Input('drdw2Corre','value')])
+
+def update_graph(dropdown1Corre,drdw2Corre):
+    titleMayorCor=maxCorre(corre_df,dropdown1Corre)
+    sinOutlier(training_df, titleMayorCor[0]),sinOutlier(training_df, titleMayorCor[1])
+    df_positivo = training_df[training_df['DiagPeriodL90D'] == 1.]
+    df_negativo = training_df[training_df['DiagPeriodL90D'] == 0.]
+    titMayorCor=f'{titleMayorCor[0].title()} - {titleMayorCor[1].title()}: {titleMayorCor[2]}'
+    return titMayorCor,armar_scatter(corre_df,dropdown1Corre,training_df),gfScaBox(df_positivo,titleMayorCor[0],titleMayorCor[1],drdw2Corre,'Diagnostico Positivo'),gfScaBox(df_negativo,titleMayorCor[0],titleMayorCor[1],drdw2Corre,'Diagnostico Negativo')
 
 layout = html.Div(
     [titulo,div_grafica,button,subTitulo,div_graficorre,analisi_corre]
