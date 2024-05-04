@@ -11,6 +11,12 @@ warnings.filterwarnings('ignore')
 from summarytools import dfSummary
 from dash_dangerously_set_inner_html import DangerouslySetInnerHTML
 from app import app
+
+training_df  = pd.read_csv("assets/data/training.csv")
+corre_df=pd.read_csv("assets/data/correlaciones.csv")
+df_encoder = pd.read_csv('assets/data/df_encoder.csv')
+df_states=pd.read_csv('assets/data/df_states.csv')
+
 links = html.Div([
     html.A(html.Label('Datos',className='link'),href='#datos'),
     html.A(html.Label('Correlaciones',className='link'),href='#correlacion'),
@@ -19,11 +25,6 @@ links = html.Div([
 ],className='row_header')
 
 titulo  =  html.H1("ANÁLISIS EXPLORATORIO DE DATOS".title(),className='titutlo-analisis')
-
-
-training_df  = pd.read_csv("assets/data/training.csv")
-corre_df=pd.read_csv("assets/data/correlaciones.csv")
-df_encoder = pd.read_csv('assets/data/df_encoder.csv')
 
 def div_feature(feature):
     return html.Div(feature,className='div_feature')
@@ -60,7 +61,7 @@ tipo_datos = html.Div([
     html.H3('Tipos De Datos',className='title_Corre'),
     html.Div([
         dcc.Graph(figure=bar_tipoDatos())
-    ],className='center_figure'),
+    ],className='center_figure rounded-graph rdg2'),
     html.Div([
         div_listfeatures('Categóricas',object_cols),
         div_listfeatures('Numéricas',number_cols),
@@ -155,10 +156,6 @@ div_graficas_features = html.Div([
     ],className='w-all center_row_around'),
 ],className='center_col gap_30 mt-30 body_graficas',id='distribucion')
 
-
-
-
-
 def histogram(col1):
     fig = px.histogram(training_df, x=col1 , marginal='box',
                         color_discrete_sequence = px.colors.qualitative.Pastel,
@@ -236,8 +233,6 @@ def div_scatter(col1, col2, color):
 
     return [label, graph]
 
-
-
 @app.callback(
     [
         Output('histograma-feature1','children'),
@@ -262,7 +257,7 @@ def graficar_scatter(n_clicks,col1,col2,color):
     return fig1,fig2,fig3,fig4
 
 final = html.Div([],className='final')
-subTitulo=html.Div(html.H2("Correlaciones".title(),className='subtitutlo-analisis'),className='left-align')
+subTitulo=html.Div(html.H3("Correlaciones".title(),className='subtitutlo-analisis'),className='left-align')
 
 def armar_scatter(df_corre,label,df):
   fig = make_subplots(rows=2, cols=2)
@@ -278,17 +273,17 @@ def armar_scatter(df_corre,label,df):
         fig.update_xaxes(title_text=label, row=x+1, col=y+1)
         fig.update_yaxes(title_text=df_corre.iloc[y+2]['target'], row=x+1, col=y+1)
       else: continue
-  fig.update_layout( title_text=f'Mapas de distribucion',width=1000,height=800,showlegend=True)
+  fig.update_layout( title_text=f'Mapas de distribucion',width=1000,height=700,showlegend=True)
   return fig
 
 div_graficorre=html.Div([
         html.Div([
             html.Label('Feature',className='labels'),
             dcc.Dropdown(corre_df['source'].unique(), id='dropdown1Corre',className='dropdown-feature',value='population'),
-        ]),
+        ]), html.Br(),
         html.Div([
-            dcc.Graph(id='figs_graficas')])
-    ],className='center')
+            dcc.Graph(id='figs_graficas')],className='rounded-graph')
+    ],className='center ')
 
 def maxCorre(df,label):
     dfFil = df[df['source'] == label]
@@ -312,18 +307,22 @@ def gfScaBox(df, label1, label2, categ,titulo):
     fig.update_layout(width=720, title=titulo,height=500)
     return fig
 
-analisi_corre=html.Div([
+analisi_corre=html.Div([html.Br(),
         html.Label('Mayor Correlación ',className='labels'), 
         html.Div([
             html.Br(),
             html.Div(id='colMayorCorr',  className='labels'),
             html.Br(),
-            dcc.Dropdown(['patient_race','payer_type','Region','Division'], id='drdw2Corre',className='dropdown-feature',value='patient_race'),
+            dcc.Dropdown(object_cols, id='drdw2Corre',className='dropdown-feature',value=object_cols[0]),
             html.Br()
         ]),
         html.Div([
-            dcc.Graph(id='fig_posi'),
-            dcc.Graph(id='fig_nega'),
+            html.Div([
+                dcc.Graph(id='fig_posi'),
+            ],className='rounded-graph'),
+            html.Div([
+                dcc.Graph(id='fig_nega'),
+            ],className='rounded-graph')
         ],className='row_gr')
     ],className='center')
 @app.callback(
@@ -342,7 +341,71 @@ def update_graph(dropdown1Corre,drdw2Corre):
     titMayorCor=f'{titleMayorCor[0].title()} - {titleMayorCor[1].title()}: {titleMayorCor[2]}'
     return titMayorCor,armar_scatter(corre_df,dropdown1Corre,training_df),gfScaBox(df_positivo,titleMayorCor[0],titleMayorCor[1],drdw2Corre,'Diagnostico Positivo'),gfScaBox(df_negativo,titleMayorCor[0],titleMayorCor[1],drdw2Corre,'Diagnostico Negativo')
 
+tiuloMap=html.H1("Analisis por Estados ",className='title_Corre')
+
+def grfMap(df_state_value):
+    fig = px.choropleth(
+        df_state_value,
+        locations='State',
+        locationmode='USA-states',
+        color='Value',
+        hover_name='State',
+        hover_data={'State': False, 'Value': True,'Diagnostic90D':True,'NoDiagnostic90D':True},
+        color_continuous_scale='Sunset',
+        scope='usa',
+        title='Los pacientes se distribuyen en los sgts Estados'
+    )
+    fig.update_layout(
+        margin=dict(l=0, r=0, t=30, b=0),
+        coloraxis_colorbar=dict(
+            title='Cantidad',
+            tickvals=[i for i in range(0, int(df_state_value['Value'].max())+1, 250)]
+        ),
+        width=800, 
+        height=500 
+    )
+    return fig
+
+grfMapa=html.Div([
+            html.Div([
+                dcc.Graph(figure=grfMap(df_states))
+            ],className='rounded-graph')   
+        ],className='center')
+
+def top_states(df_state_value,stateData):
+    top10_state_yes = df_state_value.sort_values(stateData,ascending=False)
+    top10_yesdiag_bar = px.bar(
+                    top10_state_yes[:10],x='State',y=stateData,color='State',
+                    color_discrete_sequence=px.colors.qualitative.Pastel,
+                    title='TOP 10 States with the highest percentage of being diagnosed before 90 days'.title(),
+                    labels={stateData:'Percentage'},
+                    text_auto=True,hover_data={'Diagnostic90D':True},width=850,height=500 )
+    return top10_yesdiag_bar
+
+sub_tiuloMap=html.Div(html.H3("Top de los Estados".title(),className='subtitutlo-analisis'),className='left-align')
+
+top_state=html.Div([
+        html.Div([
+            dcc.RadioItems(
+            id='rd_topSta',
+            options=['Positivo','Negativo'],
+            value='Positivo',  
+            labelStyle={'padding': '10px', 'margin-right': '10px', 'display': 'inline-block'})]),
+        html.Div([
+            dcc.Graph(id='grf_top')
+        ],className='rounded-graph')    
+    ])
+@app.callback(
+    Output('grf_top','figure'),
+    Input('rd_topSta','value')
+)
+def grf_topCa(rd_topSta):
+    if rd_topSta=='Positivo':
+        return top_states(df_states,'StateDiagnostic90DPercentage')
+    return top_states(df_states,'StateNoDiagnostic90DPercentage')
+
 layout = html.Div(
-    [links,titulo,tipo_datos,fast_analisis,div_correlation,div_graficas_features,final,subTitulo,div_graficorre,analisi_corre]
+    [links,titulo,tipo_datos,fast_analisis,div_correlation,div_graficas_features,
+    final,subTitulo,div_graficorre,analisi_corre,tiuloMap,grfMapa,sub_tiuloMap,top_state]
     ,className='center body'
-    )   
+    )
