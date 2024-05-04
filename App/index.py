@@ -13,7 +13,7 @@ dropdown = dbc.DropdownMenu(
     children=[
         dbc.DropdownMenuItem("Inicio", href="/home",    className='text-xlarge'),
         dbc.DropdownMenuItem("Analisis", href="/analisis",    className='text-xlarge'),
-        dbc.DropdownMenuItem("Modelo", href="/admision",    className='text-xlarge'),
+        dbc.DropdownMenuItem("Modelo", href="/modelo",    className='text-xlarge'),
     ],
     nav = True,
     in_navbar = True,
@@ -68,7 +68,7 @@ app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     navbar,
     html.Div(id='page-content')
-])
+],className='background')
 
 
 @app.callback(Output('page-content', 'children'),

@@ -1,6 +1,9 @@
 /*Navbar*/
+*{
+    user-select: none;
+}
 .navbar{
-    background: rgb(122, 204, 207);
+    /*background: rgb(122, 204, 207);*/
     width: 100%;
     display: flex;
     justify-content: center;
@@ -30,7 +33,7 @@
 .container_navbar{
     width: 100%;
 }
-.backgroundNavbar{
-    background: rgb(122, 204, 207);
+.background{
+    background-image: linear-gradient(25deg, #21af66, #37ad96, #34aac6, #00a7f6);
 }
 
