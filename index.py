@@ -5,16 +5,8 @@ from dash.exceptions import PreventUpdate
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
-import dash
-import dash_bootstrap_components as dbc
 # Pages
 from pages import analisis, modelo,home
-
-
-external_stylesheets = [dbc.themes.YETI]  
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-server = app.server
-app.config.suppress_callback_exceptions = True
 
 dropdown = dbc.DropdownMenu(
     children=[
