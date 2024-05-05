@@ -153,3 +153,4 @@ widgetsnbextension==4.0.10
 zipp==3.18.1
 gunicorn
 catboost
+category_encoders
