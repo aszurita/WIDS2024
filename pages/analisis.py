@@ -404,8 +404,102 @@ def grf_topCa(rd_topSta):
         return top_states(df_states,'StateDiagnostic90DPercentage')
     return top_states(df_states,'StateNoDiagnostic90DPercentage')
 
+def bmi_state(training_df):
+    bmi_without_null = training_df.dropna(subset='bmi')
+    bmi_state = bmi_without_null.groupby('patient_state').agg(
+     mean_bmi=pd.NamedAgg(column='bmi', aggfunc='mean'),).reset_index()
+    bmi_state.columns=['State','Mean_Bmi']
+    return bmi_state
+
+def grf_bmiState(df_bmi):
+    fig_barrmode_bmi_state = px.bar(df_bmi.sort_values('Mean_Bmi',ascending=False), y='State' , x ='Mean_Bmi',barmode = 'group',
+                                 labels={'value':'Median BMI','variable':''},text_auto=True,orientation='h',
+                                 color_discrete_sequence=px.colors.qualitative.Pastel,color = 'State',
+                                  hover_name='State',hover_data={'State': False}, title='Bmi By State'.title() )
+    fig_barrmode_bmi_state.update_layout(height=1700, width=850)
+    fig_barrmode_bmi_state.update_traces(width=0.7)
+    return fig_barrmode_bmi_state
+
+sub_tituBmi=html.Div(html.H3("Visulización de media de bmi por estado".title(),className='subtitutlo-analisis'),className='left-align')
+
+state_bmi=html.Div([
+        html.Div([
+            dcc.Graph(figure=grf_bmiState(bmi_state(training_df)))
+        ],className='rounded-graph')    
+    ])
+
+def top_PromedioParti(df_state_value,training_df):
+    df_top_meanPM25 = df_state_value.sort_values(by='meanPM25', ascending=False)
+    df_top_meanPM25=df_top_meanPM25.head(5)
+    df_filtradoPorTOp=training_df[training_df['patient_state'].isin(df_top_meanPM25['State'])]
+    df_filtradoPorTOp_posi=df_filtradoPorTOp[df_filtradoPorTOp['DiagPeriodL90D'] == 1.]
+    df_filtradoPorTOp_nega=df_filtradoPorTOp[df_filtradoPorTOp['DiagPeriodL90D'] == 0.]
+    return [df_filtradoPorTOp_posi,df_filtradoPorTOp_nega]
+
+def grf_boxPart(df_filtradoPorTOp_posi,df_filtradoPorTOp_nega):
+    lista_colors=['blue','red','green','rgb(93, 197, 244 )','rgb(248, 115, 89 )','rgb(40, 226, 99 )']
+    lista_nombres=['PM25 Positivo','N02 Positivo','Ozone Positivo','PM25 Negativo','N02 Negativo','Ozone Negativo']
+    lista_labe=['PM25','N02','Ozone']
+    fig = make_subplots(rows=2, cols=3)
+    for x in range(2):
+        for y in range(3):
+            if x==1:
+                fig.add_trace(go.Box(x=df_filtradoPorTOp_posi['patient_state'], y=df_filtradoPorTOp_posi[lista_labe[y]],name=lista_nombres[y], marker_color=lista_colors[y]),row=x+1, col=y+1)
+            else:
+                fig.add_trace(go.Box(x=df_filtradoPorTOp_nega['patient_state'], y=df_filtradoPorTOp_nega[lista_labe[y]],name=lista_nombres[y+3], marker_color=lista_colors[y+3]),row=x+1, col=y+1)
+    fig.update_traces(quartilemethod="exclusive")
+    fig.update_layout(width=800,height=600,title_text='Dispersion de particulas agrupados por estados')
+    return fig
+
+titu_tiParti=html.H1("Analisis por Particulas ",className='title_Corre')
+
+df_parti=top_PromedioParti(df_states,training_df)
+
+state_parti=html.Div([
+        html.Div([
+            dcc.Graph(figure=grf_boxPart(df_parti[0],df_parti[1]))
+        ],className='rounded-graph')    
+    ])
+
+def scatter_parti(df_state_value,label):
+    fig = px.scatter(df_state_value, x=label, y='StateDiagnostic90DPercentage',color='State',
+                 labels={
+                     label: f'Niveles de {label}',
+                     'StateDiagnostic90DPercentage': 'Tasa de incidencia de cáncer'
+                 },
+                 size='StateDiagnostic90DPercentage',
+                 size_max=20 ,
+                 title=f'Relación entre niveles de {label} y tasas de incidencia de cáncer')
+    fig.update_layout(width=1000)
+    return fig
+
+sub_tituParti=html.Div(html.H3("Relacion entre los niveles de particulas y Incidencia de deteccion".title(),className='subtitutlo-analisis'),className='left-align')
+
+labels_parti=html.Div([
+        html.Div([
+            html.Label('Tipo de particula',className=''),
+            dcc.Dropdown(options=[
+                {'label': 'NO2', 'value': 'meanN02'},
+                {'label': 'PM25', 'value': 'meanPM25'},
+                {'label': 'Ozono', 'value': 'meanOzone'},
+   ], id='ddw_parti',className='dropdown-feature',value='meanN02'),
+        ]), html.Br(),
+        html.Div([
+            dcc.Graph(id='fig_scatter')],className='rounded-graph')
+    ],className='center')
+
+@app.callback(
+    Output('fig_scatter', 'figure'),
+    Input('ddw_parti', 'value')
+)
+def drop_part(value):
+    return scatter_parti(df_states,value)
+
+titu_tiParti=html.H1("Analisis por Raza",className='title_Corre')
+
 layout = html.Div(
     [links,titulo,tipo_datos,fast_analisis,div_correlation,div_graficas_features,
-    final,subTitulo,div_graficorre,analisi_corre,tiuloMap,grfMapa,sub_tiuloMap,top_state]
+    final,subTitulo,div_graficorre,analisi_corre,tiuloMap,grfMapa,sub_tiuloMap,top_state,
+    sub_tituBmi,state_bmi,titu_tiParti,state_parti,sub_tituParti,labels_parti]
     ,className='center body'
     )

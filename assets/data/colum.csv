@@ -1,0 +1,84 @@
+Columnas|Descripción
+DiagPeriodL90D|Período de diagnóstico inferior a 90 días. Esta es una indicación de si el cáncer fue diagnosticado dentro de los 90 días.
+Patient_Id|Número de identificación único del paciente.
+Patient_Race|Asiático, afroamericano, hispano o latino, blanco, otra raza.
+Payer_Type|Tipo de pagador en Medicaid, Comercial, Medicare en la fecha metastásica.
+Patient_State|Estado del paciente en la fecha metastásica (por ejemplo, AL, AK, AZ, AR, CA, CO, etc.).
+Patient_Zip3|Paciente Zip3 (por ejemplo, 190) en la fecha metastásica.
+Patient_Age|Derivado del año de nacimiento del paciente (año índice menos año de nacimiento).
+Patient_Gender|F, M en la fecha metastásica.
+Bmi|Si está disponible, mostrará la información del IMC disponible (primer registro del IMC después de la fecha metastásica).
+Breast_Cancer_Diagnosis_Code|Código de diagnóstico ICD10 o ICD9.
+Breast_Cancer_Diagnosis_Desc|Descripción del código ICD10 o ICD9. Esta columna es texto sin formato y puede requerir PNL/procesamiento y limpieza.
+Metastatic_Cancer_Diagnosis_Code|Código de diagnóstico ICD10.
+Metastatic_First_Novel_Treatment|Nombre genérico del fármaco del primer tratamiento novedoso (p. ej., "cisplatino") después del diagnóstico metastásico.
+Metastatic_First_Novel_Treatment_Type|Descripción del tratamiento (p. ej., antineoplásico) del primer tratamiento novedoso después del diagnóstico metastásico.
+Region|Región de ubicación del paciente.
+Division|División de ubicación del paciente.
+Population|Una estimación de la población del código postal.
+Density|La población estimada por kilómetro cuadrado.
+Age_Median|La edad media de los residentes en el código postal.
+Male|El porcentaje de residentes que declaran ser hombres (por ejemplo, 55,1).
+Female|El porcentaje de residentes que declaran ser mujeres (por ejemplo, 44,9).
+Married|El porcentaje de residentes que declaran estar casados (por ejemplo, 44,9).
+Family_Size|El tamaño medio de las familias residentes (por ejemplo, 3,22).
+Income_Household_Median|Ingreso medio del hogar en USD.
+Income_Household_Six_Figure|Porcentaje de hogares que ganan al menos 100.000 dólares (por ejemplo, 25,3).
+Home_Ownership|Porcentaje de hogares que poseen (en lugar de alquilar) su residencia.
+Housing_Units|El número de unidades de vivienda (u hogares) en el código postal.
+Home_Value|El valor medio de las viviendas propiedad de residentes.
+Rent_Median|El alquiler medio pagado por los inquilinos.
+Education_College_Or_Above|El porcentaje de residentes con al menos una titulación de 4 años.
+Labor_Force_Participation|El porcentaje de residentes de 16 años y más en la fuerza laboral.
+Unemployment_Rate|El porcentaje de residentes en paro.
+Race_White|El porcentaje de residentes que reportan su raza blanca.
+Race_Black|El porcentaje de residentes que informan que su raza es negra o afroamericana.
+Race_Asian|El porcentaje de residentes que declaran que su raza es asiática.
+Race_Native|El porcentaje de residentes que declaran su raza como indio americano y nativo de Alaska.
+Race_Pacific|El porcentaje de residentes que declaran su raza como nativos de Hawái y otras islas del Pacífico.
+Race_Other|El porcentaje de residentes que reportan su raza como Alguna otra raza.
+Race_Multiple|El porcentaje de residentes que reportan su raza como Dos o más razas.
+Hispanic|El porcentaje de residentes que reportan ser hispanos. Nota: Se considera que el hispano es una etnia y no una raza.
+Age_Under_10|El porcentaje de residentes de 0 a 9 años.
+Age_10_To_19|El porcentaje de residentes de 10 a 19 años.
+Age_20s|El porcentaje de residentes entre 20 y 29 años.
+Age_30s|El porcentaje de residentes entre 30 y 39 años.
+Age_40s|El porcentaje de residentes entre 40 y 49 años.
+Age_50s|El porcentaje de residentes entre 50 y 59 años.
+Age_60s|El porcentaje de residentes entre 60 y 69 años.
+Age_70s|El porcentaje de residentes entre 70 y 79 años.
+Age_Over_80|El porcentaje de residentes mayores de 80 años.
+Divorced|El porcentaje de residentes divorciados.
+Never_Married|El porcentaje de residentes que nunca se casaron.
+Widowed|El porcentaje de residentes que nunca enviudaron.
+Family_Dual_Income|El porcentaje de familias con doble ingreso.
+Income_Household_Under_5|El porcentaje de hogares con ingresos inferiores a $5.000.
+Income_Household_5_To_10|El porcentaje de hogares con ingresos de entre $5.000 y $10.000.
+Income_Household_10_To_15|El porcentaje de hogares con ingresos entre $10,000 y $15,000.
+Income_Household_15_To_20|El porcentaje de hogares con ingresos de entre $15.000 y $20.000.
+Income_Household_20_To_25|El porcentaje de hogares con ingresos de entre $20.000 y $25.000.
+Income_Household_25_To_35|El porcentaje de hogares con ingresos entre $25.000 y $35.000.
+Income_Household_35_To_50|El porcentaje de hogares con ingresos de entre $35.000 y $50.000.
+Income_Household_50_To_75|El porcentaje de hogares con ingresos de entre $50.000 y $75.000.
+Income_Household_75_To_100|El porcentaje de hogares con ingresos de entre $75.000 y $100.000.
+Income_Household_100_To_150|El porcentaje de hogares con ingresos entre $100.000 y $150.000.
+Income_Household_150_Over|El porcentaje de hogares con ingresos superiores a 150.000 dólares.
+Income_Individual_Median|El ingreso medio de las personas en el código postal.
+Poverty|El valor medio de las viviendas ocupadas por sus propietarios.
+Rent_Burden|El alquiler medio como porcentaje del ingreso familiar del inquilino medio.
+Education_Less_Highschool|El porcentaje de residentes con educación inferior a la secundaria.
+Education_Highschool|El porcentaje de residentes con diploma de escuela secundaria pero no más.
+Education_Some_College|El porcentaje de residentes con alguna universidad pero no más.
+Education_Bachelors|El porcentaje de residentes con título de licenciatura (o equivalente) pero no superior.
+Education_Graduate|El porcentaje de residentes con título de posgrado.
+Education_Stem_Degree|El porcentaje de graduados universitarios con una licenciatura o superior en un campo de Ciencias e Ingeniería (o relacionado).
+Self_Employed|El porcentaje de hogares que declaran ingresos de trabajo por cuenta propia en su declaración de impuestos del IRS de 2016.
+Farmer|El porcentaje de hogares que declaran ingresos agrícolas en su declaración de impuestos del IRS de 2016.
+Disabled|El porcentaje de residentes que reportan una discapacidad.
+Limited_English|El porcentaje de residentes que sólo hablan inglés limitado.
+Commute_Time|El tiempo medio de desplazamiento de los trabajadores residentes en minutos.
+Health_Uninsured|El porcentaje de residentes que reportan no tener seguro médico.
+Veteran|El porcentaje de residentes que son veteranos.
+Ozone|Datos de concentración anual de Ozono (O3) a nivel Zip3. Estos datos muestran cómo los datos sobre la calidad del aire pueden afectar la salud.
+Pm25|Datos de concentración anual de partículas finas (PM2,5) a nivel Zip3. Estos datos muestran cómo los datos sobre la calidad del aire pueden afectar la salud.
+No2|Datos de concentración anual de Dióxido de Nitrógeno (NO2) a nivel Zip3. Estos datos muestran cómo los datos sobre la calidad del aire pueden afectar la salud.

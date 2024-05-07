@@ -1,0 +1,32 @@
+.titutlo-analisis {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 70px;
+    padding: 5px;
+    margin-top: 10px;
+}
+.info-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.info-box {
+    margin-bottom: 30px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 25px 55px;
+}
+
+.labels-box {
+    background-color: rgb(190, 250, 255);
+}
+
+.table-container {
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+}
+
+.table-wrapper {
+    width: 100%;
+}
