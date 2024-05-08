@@ -77,6 +77,14 @@ fast_analisis = html.Div([
     html.Div(DangerouslySetInnerHTML(summary_html),className='resumen')
 ],className='div_resumen_general')
 
+fast_analisis2 = html.Div([
+    html.A([
+        html.Label("Visualizar y Análisis de datos", className="label_eda"),
+        html.Img(src="assets/images/image.png", className="imagen_eda")
+    ], href="https://angelofasteda.000webhostapp.com/", target="_blank", className="div_imagen")
+])
+
+
 
 div_correlation = html.Div([
     html.H3('Correlaciones',className='title_Corre'),
@@ -405,7 +413,7 @@ def grf_topCa(rd_topSta):
     return top_states(df_states,'StateNoDiagnostic90DPercentage')
 
 layout = html.Div(
-    [links,titulo,tipo_datos,fast_analisis,div_correlation,div_graficas_features,
+    [links,titulo,tipo_datos,fast_analisis,fast_analisis2,div_correlation,div_graficas_features,
     final,subTitulo,div_graficorre,analisi_corre,tiuloMap,grfMapa,sub_tiuloMap,top_state]
     ,className='center body'
     )

@@ -253,3 +253,21 @@ Array
     margin: auto;
 }
 
+.div_imagen{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 40px;
+
+}
+
+.imagen_eda {
+    aspect-ratio: auto;
+    width: 700px;
+}
+
+.label_eda{
+    font-size: xx-large;
+    font-weight: bold;
+}

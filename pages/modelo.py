@@ -125,9 +125,9 @@ def label_value(value):
 def update_div_model(button1,button2,button3):
     ctx = dash.callback_context
     button_id = ctx.triggered[0]['prop_id'].split('.')[0]
-    label = html.Label(encontrar_titulo_por_id(button_id),className='labelModel')
     TN,FP,FN,TP,imagen,accuracy = html.Div(),html.Div(),html.Div(),html.Div(),html.Div(),html.Div()
     button_id = button_id or 'Modelo1' # Predeterminado
+    label = html.Label(encontrar_titulo_por_id(button_id),className='labelModel')
     if button_id:
         modelo  = encontrar_modelo_por_id(button_id)
         lista_values = modelo['confusion_matrix']
