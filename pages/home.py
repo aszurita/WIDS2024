@@ -5,6 +5,7 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 
+layout = html.Div([
 df = pd.read_csv("assets/data/colum.csv", sep="|")
 
 # Componentes HTML y CSS
@@ -118,7 +119,6 @@ tablaColum=html.Div(
         )
     ]
 )
-
 layout = html.Div([
     titleGeneral,carousel,infoDat,tablaColum
 ],className='body_model')
