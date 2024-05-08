@@ -80,7 +80,7 @@ fast_analisis = html.Div([
 
 fast_analisis2 = html.Div([
     html.A([
-        html.Label("Visualizar y Análisis de datos", className="label_eda"),
+        html.Label("Visualizar análisis rapido de los datos", className="label_eda"),
         html.Img(src="assets/images/image.png", className="imagen_eda")
     ], href="https://angelofasteda.000webhostapp.com/", target="_blank", className="div_imagen")
 ])
