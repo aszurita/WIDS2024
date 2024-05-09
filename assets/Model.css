@@ -350,7 +350,7 @@
     justify-content: space-around;
 }
 
-@media not all and (min-width: 640px) {
+@media not all and (min-width: 1024px) {
     .row_confu_matrix, .div_parametros,.row_inputs,.row_result,.row-model{
         flex-direction: column;
         justify-content: center;
@@ -394,5 +394,10 @@
         height: 300px;
         border-radius: 20px;
         background-color:burlywood;
+    }
+}
+@media not all and (min-width: 1700px) {
+    .row_inputs{
+        flex-wrap: wrap;
     }
 }
