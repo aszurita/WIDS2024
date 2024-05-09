@@ -71,12 +71,13 @@ Array
     justify-content: center;
     align-items: center;
 }
-
-.w-all {
+.w-all{
+    width: 100%;
 }
 
 .feature {
     gap: 20px;
+    width: 40%;
 }
 
 .dropdown-feature {
@@ -87,10 +88,10 @@ Array
 .center_row_around {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     gap: 100px;
-    width: 100%;
+    width: 80%;
 }
 
 .labels {
@@ -109,7 +110,7 @@ Array
 .button-graficar {
     position: absolute;
     top: 65px;
-    right: 10px;
+    right: 50px;
     padding: 10px;
     border-radius: 25%;
     background-color: rgb(73, 213, 159);
@@ -286,16 +287,12 @@ Array
 }
 .div_table{
     width: 90%;
+    max-width: 800px;
 }
 
-.graph_res{
-    min-width: 350px !important;
-    width: 90% !important; 
-    max-width: 700px !important;
-}
+
 @media not all and (min-width: 640px) {
     .titutlo-analisis{
-        font-size: medium;
         padding-left: 15px;
         padding-right: 15px;
     }
@@ -326,10 +323,25 @@ Array
         gap:20px;
     }
     .button-graficar{
-        top:20px;
-        right: 0px;
+        top:100px;
+        right: 30%;
     }
-    .center_col{
-        margin-left: 2%;
+    .graph_res{
+        width: 350px;
+    }
+}
+
+@media not all and (min-width: 768px) {
+    .graph_res{
+        width: 350px;
+    }
+}
+@media not all and (min-width: 1280px) {
+    .center_row_around{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0px;
+        margin: 0px;
     }
 }

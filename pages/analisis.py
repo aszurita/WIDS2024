@@ -163,12 +163,12 @@ div_graficas_features = html.Div([
         ],className='center_col feature'),
         html.Div(id='div_scatter',className='center_col feature div_resultado'),
     ],className='w-all center_row_around'),
-],className='center_col gap_30 mt-30 body_graficas',id='distribucion')
+],className='center_col gap_30 mt-30 body_graficas w-all',id='distribucion')
 
 def histogram(col1):
     fig = px.histogram(training_df, x=col1 , marginal='box',
                         color_discrete_sequence = px.colors.qualitative.Pastel,
-                        title=f"'{col1.upper()}' ", width=700,
+                        title=f"'{col1.upper()}' ",
                         labels={col1:col1.upper()})
     mean = training_df[col1].mean()
     fig.add_vline(x=mean, line_width=3, line_dash='dash', line_color='rgb(254,136,177)', annotation_text=f' Mean: {mean:.2f}',
@@ -239,7 +239,6 @@ def div_scatter(col1, col2, color):
     secondary_col = col2 if col1 else col1
     graph = dcc.Graph(figure=function(primary_col, secondary_col, color),className="graph_res")
     label = html.Label('Resultado', className='labels')
-
     return [label, graph]
 
 @app.callback(

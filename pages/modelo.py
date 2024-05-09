@@ -200,8 +200,6 @@ def input_dropdown(label):
         classname='div_dropdown_desc'
     else : 
         input = dropdown
-
-
     div = html.Div([
         html.Label(label,className='label_dropdown'),
         input
@@ -248,14 +246,20 @@ inputs = html.Div([
 div_best_model  = html.Div([
     html.Label("Mejor Modelo",className='labelModel'),
     html.Div([
-        html.Label(encontrar_modelo_por_id('Modelo3')['titulo'],className='label_best_model'),
-        html.H2('Accuracy',className='label_acc_best'),
-        html.Div(round(encontrar_modelo_por_id('Modelo3')['accuracy'],4),id='accuracy_thebest',className='best_acc')
-    ],className='card_info'),
+        html.Div([
+            html.Label(encontrar_modelo_por_id('Modelo3')['titulo'],className='label_best_model'),
+            html.H2('Accuracy',className='label_acc_best'),
+            html.Div(round(encontrar_modelo_por_id('Modelo3')['accuracy'],4),id='accuracy_thebest',className='best_acc')
+        ],className='card_info'),
+        html.Div([
+            html.P("! Por favor, selecciona los valores deseados en los menús desplegables a continuación y luego haz clic en el botón 'Predecir' para obtener los resultados basados en tus selecciones. ")
+        ],className='card_info px')
+    ],className="row-model"
+    ),
     inputs,
     html.Div([
-        html.Div(id='table_features',className='col_table'),
-        html.Div(id='resultados',className='col_table')
+        html.Div(id='table_features',className='div_col_table'),
+        html.Div(id='resultados',className='div_graficoPredict')
     ],className='row_result')
 ],className='div_models')
 
@@ -326,9 +330,10 @@ def inputs_predict(*args) :
             'textAlign': 'center',
             'overflow': 'hidden',
             'textOverflow': 'ellipsis',
-            'minWidth': '300px', 'width': '180px', 'maxWidth': '180px',
+            'minWidth': '300px', 'width': '180px', 'maxWidth': '400px',
         })
-        div_table = [title,table_features]
+        div_table_features = html.Div(table_features,className="col_table")
+        div_table = [title,div_table_features]
         df_predict_objects_col = encoder.transform(df_predict[object_cols])
         df_predict_encoder = pd.concat([df_predict_objects_col.reset_index(drop=True), df_predict[number_cols].reset_index(drop=True)], axis=1)
         y_proba = catBoostClassifier.predict_proba(df_predict_encoder)
@@ -338,11 +343,12 @@ def inputs_predict(*args) :
             'Categoria': ['SI DIAGNOSTICADO 90D', 'NO DIAGNOSTICADO 90D'],
             'Probabilidad': [prob_1, prob_0]
         })
-        fig_probabilidad = px.pie(data, values='Probabilidad', names='Categoria', title='Probabilidad de ser diagnosticado dentro de los 90 días'.title(),color='Categoria',
-                                color_discrete_map={'BENIGN':'rgb(26, 77, 128)','MALIGNANT':'rgb(128, 26, 26)'},width=500)
+        fig_probabilidad = px.pie(data, values='Probabilidad', names='Categoria', title='Probabilidad de ser diagnosticado'.title(),color='Categoria',
+                                color_discrete_map={'BENIGN':'rgb(26, 77, 128)','MALIGNANT':'rgb(128, 26, 26)'})
         title_result= html.Label('Resultado',className='label_table')
-        figrure = dcc.Graph(figure=fig_probabilidad)
-        div_resul = [title_result,figrure]
+        figrure = dcc.Graph(figure=fig_probabilidad,className="graph_res2")
+        div_figrure = html.Div([figrure],className="rounded-graph")
+        div_resul = [title_result,div_figrure]
     return div_table,div_resul
 
 layout = html.Div([
