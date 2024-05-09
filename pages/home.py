@@ -11,11 +11,11 @@ df = pd.read_csv("assets/data/colum.csv", sep="|")
 titleGeneral = html.Div([
     dbc.Container([
         dbc.Row([
-            dbc.Col(html.H1("Welcome to the ESPOL dashboard", className='titutlo-analisis')
+            dbc.Col(html.H1("Welcome to the ESPOL dashboard", className='titutlo-analisis titutlo_responsive')
                     , className="mb-4 mt-4")
         ]),
     ])
-])
+],className="divtitle_responsive")
 
 carousel = dbc.Carousel(
     items=[
@@ -39,6 +39,7 @@ carousel = dbc.Carousel(
         "border-radius": "15px", 
         "overflow": "hidden" 
     }
+    ,className="carousel"
 )
 
 infoDat = html.Div(
@@ -78,13 +79,14 @@ infoDat = html.Div(
                 html.Div(
                     [
                         html.H2('Los Labels con los datos:'),
+                        html.Label("Desliza hacia la derecha para explorar el significado",className="text-appear")
                     ],
                     className='info-box labels-box'
                 ),
             ],
             className='info-container'
         )
-    ]
+    ],className="container_info"
 )
 
 tablaColum=html.Div(

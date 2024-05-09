@@ -28,7 +28,7 @@ links = html.Div([
 titulo  =  html.H1("ANÁLISIS EXPLORATORIO DE DATOS".title(),className='titutlo-analisis')
 
 def div_feature(feature):
-    return html.Div(feature,className='div_feature')
+    return html.P(feature,className='div_feature')
 
 object_cols = list(training_df.select_dtypes(include='object').columns)
 number_cols = list(training_df.select_dtypes(exclude='object').columns)
@@ -61,7 +61,7 @@ def bar_tipoDatos():
 tipo_datos = html.Div([
     html.H3('Tipos De Datos',className='title_Corre'),
     html.Div([
-        dcc.Graph(figure=bar_tipoDatos())
+        dcc.Graph(figure=bar_tipoDatos(),className="graph_res")
     ],className='center_figure rounded-graph rdg2'),
     html.Div([
         div_listfeatures('Categóricas',object_cols),
@@ -83,7 +83,7 @@ fast_analisis2 = html.Div([
         html.Label("Visualizar análisis rapido de los datos", className="label_eda"),
         html.Img(src="assets/images/image.png", className="imagen_eda")
     ], href="https://angelofasteda.000webhostapp.com/", target="_blank", className="div_imagen")
-])
+],className="div_fastAnalisis2")
 
 
 
@@ -95,7 +95,7 @@ div_correlation = html.Div([
                 className='dropdown-feature'
             ),
     html.P('Top 10 con mayor correlación :',className='subtitle'),
-    html.Div(id='table_correlacion')
+    html.Div(id='table_correlacion',className="div_table")
     ],className='div_correlation',id='correlacion')
 
 
@@ -168,7 +168,7 @@ div_graficas_features = html.Div([
 def histogram(col1):
     fig = px.histogram(training_df, x=col1 , marginal='box',
                         color_discrete_sequence = px.colors.qualitative.Pastel,
-                        title=f"DISTRIBUCIÓN DE DATOS DE LA COLUMNA '{col1.upper()}' ", width=700,
+                        title=f"'{col1.upper()}' ", width=700,
                         labels={col1:col1.upper()})
     mean = training_df[col1].mean()
     fig.add_vline(x=mean, line_width=3, line_dash='dash', line_color='rgb(254,136,177)', annotation_text=f' Mean: {mean:.2f}',
@@ -179,7 +179,7 @@ def bar(col1):
     value_counts = training_df[col1].value_counts().reset_index()
     value_counts.columns = [col1,'Value']
     fig = px.bar(value_counts,x=col1,y='Value', color=col1,
-                title=f"DISTRIBUCIÓN DE DATOS DE LA COLUMNA '{col1.upper()}'",text_auto=True,
+                title=f"'{col1.upper()}'",text_auto=True,
                 color_discrete_sequence = px.colors.qualitative.Pastel,
                 labels={col1:col1.upper()})
     return fig
@@ -220,9 +220,9 @@ def div_graficar_col(col1):
     if col1 == 'frecuencia' :
         return html.Div(html.Img(src='assets/images/Frecuencia.png',width=705,height=453)) 
     if training_df[col1].dtype == 'object':
-        graph = dcc.Graph(figure=bar(col1))
+        graph = dcc.Graph(figure=bar(col1),className="graph_res")
     else:
-        graph = dcc.Graph(figure=histogram(col1))
+        graph = dcc.Graph(figure=histogram(col1),className="graph_res")
     return graph
 
 def div_scatter(col1, col2, color):
@@ -237,7 +237,7 @@ def div_scatter(col1, col2, color):
     
     primary_col = col1 if col1 else col2
     secondary_col = col2 if col1 else col1
-    graph = dcc.Graph(figure=function(primary_col, secondary_col, color))
+    graph = dcc.Graph(figure=function(primary_col, secondary_col, color),className="graph_res")
     label = html.Label('Resultado', className='labels')
 
     return [label, graph]

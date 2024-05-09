@@ -13,6 +13,7 @@
     font-size: x-large;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
+    color: black;
     text-decoration: none;
     text-align: center;
     justify-content: space-evenly;
@@ -37,3 +38,110 @@
     background-image: linear-gradient(25deg, #21af66, #37ad96, #34aac6, #00a7f6);
 }
 
+.div_center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.text-appear{
+    display:none;
+}
+@media not all and (min-width: 640px) {
+    .image_responsive{
+        width: 150px;
+        aspect-ratio: 1;
+        padding: 0;
+    }
+    .title-navbarResponsive{
+        font-size: small;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        text-decoration: none;
+        text-align: center;
+        margin-left: 35%;
+    }
+    .row_navbar{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-right: 12px;
+        max-width: 75%;
+    }
+    .navbar-responsive{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        flex-direction: row;
+        padding-left: 5px; 
+        padding-right: 5px;
+        gap: 10px;
+        width: 100%;
+    }
+    .text-appear{
+        display: block;
+        font-size: 1.5vw;
+    }
+}
+
+@media not all and (min-width: 520px) {
+    .title-navbarResponsive{
+        font-size: small;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        text-decoration: none;
+        text-align: center;
+        margin-left: 15%;
+    }
+}
+
+@media not all and (min-width: 1024px) {
+    .image_responsive{
+        width: 300px;
+        aspect-ratio: 1;
+        padding: 0;
+    }
+    .title-navbarResponsive{
+        font-size: large;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        text-decoration: none;
+        text-align: center;
+        margin-left: 45px
+    }
+    .row_navbar{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-right: 12px;
+        max-width: 75%;
+    }
+    .navbar-responsive{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        flex-direction: row;
+        padding-left: 5px; 
+        padding-right: 5px;
+        gap: 10px;
+        width: 100%;
+    }
+    .text-appear{
+        display: block;
+        font-size: 1.5vw;
+    }
+}
+
+@media not all and (min-width: 760px) {
+    .title-navbarResponsive{
+        font-size: large;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        text-decoration: none;
+        text-align: center;
+        margin-left: 25px;
+    }
+}

@@ -7,6 +7,7 @@ Array
 .row_header{
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
     padding-top: 20px;
@@ -72,7 +73,6 @@ Array
 }
 
 .w-all {
-    width: 100%;
 }
 
 .feature {
@@ -86,9 +86,11 @@ Array
 
 .center_row_around {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     gap: 100px;
+    width: 100%;
 }
 
 .labels {
@@ -125,6 +127,7 @@ Array
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
     gap:30px
 }  
 
@@ -158,9 +161,16 @@ Array
     justify-content: center;
     align-items: center;
     text-align: center;
-    width: 275px;
+    min-width: 275px;
     border-radius: 20px;
 }
+
+.text_feature{
+    max-width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .div_features{
     display: flex;
     flex-direction: column;
@@ -188,6 +198,7 @@ Array
 .div_tiposdatos{
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap:50px
@@ -212,6 +223,7 @@ Array
     justify-content: center;
     align-items: center;
     text-align: center;
+    width: 90%;
 }
 
 .div_resumen_general{
@@ -239,11 +251,11 @@ Array
     padding: 4px;
     box-shadow: 5px 5px 10px grey;
     background-color: rgb(255, 255, 255);
-    width: 100%;
+    width: 90%;
     margin: auto;
 }
 
-.rounded-graph.rdg2 {
+.rounded-graph .rdg2 {
     border: 2px solid black;
     border-radius: 15px;
     padding: 4px;
@@ -264,10 +276,60 @@ Array
 
 .imagen_eda {
     aspect-ratio: auto;
-    width: 700px;
+    max-width: 700px;
+    width: 80%;
 }
 
 .label_eda{
     font-size: xx-large;
     font-weight: bold;
+}
+.div_table{
+    width: 90%;
+}
+
+.graph_res{
+    min-width: 350px !important;
+    width: 90% !important; 
+    max-width: 700px !important;
+}
+@media not all and (min-width: 640px) {
+    .titutlo-analisis{
+        font-size: medium;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .div_feature{
+        min-width:100px;
+        text-align: center;
+    }
+    .div_features{
+        width: 350px;
+    }
+    .features{
+        width: 100%;
+    }
+    .div_resumen_general,.div_fastAnalisis2{
+        max-width: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+        text-align: justify;
+    }
+    .dropdown-feature{
+        width: 350px;
+        text-align: justify;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .center_row_around{
+        gap:20px;
+    }
+    .button-graficar{
+        top:20px;
+        right: 0px;
+    }
+    .center_col{
+        margin-left: 2%;
+    }
 }

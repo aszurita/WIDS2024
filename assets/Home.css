@@ -30,3 +30,42 @@
 .table-wrapper {
     width: 100%;
 }
+@media not all and (min-width: 640px) {
+    .divtitle_responsive{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .title_responsive{
+        font-size:20px;
+    }
+    .carousel{
+        min-width: 360px;
+    }
+    .container_info{
+        max-width: 360px;
+    }
+    .info-box{
+        min-width: 340px;
+        text-align: justify;
+    }
+    .table-container{
+        max-width: 360px;
+    }
+}
+
+@media not all and (min-width: 1024px) { 
+    .title_responsive{
+        text-align: center;
+    }
+    .container_info{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    .table-container{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+}
