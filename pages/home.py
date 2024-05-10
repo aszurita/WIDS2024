@@ -4,6 +4,7 @@ from dash.exceptions import PreventUpdate
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
+import flask 
 
 df = pd.read_csv("assets/data/colum.csv", sep="|")
 

@@ -17,6 +17,43 @@ with open('assets/data/datos.json', 'r') as file:
 
 title = html.H1('Modelo',className='title_modelo')
 
+div_ipynb = html.Div([
+    html.Div(
+        [
+            dbc.Button("Data Encoding",id="btn_mostrarDataEncoding",className="button_Model"),
+            dbc.Button("Modelo",id="btn_mostrarModelo",className="button_Model"),
+        ],className="Row_buttons"
+    ),
+    html.Div(id="codigo",className="all-w")
+],className="div_notebook")
+
+@app.callback(
+    Output("codigo", "children"),
+    Input("btn_mostrarModelo", "n_clicks"),
+    Input("btn_mostrarDataEncoding", "n_clicks"),
+    State("btn_mostrarModelo", "n_clicks"),
+    State("btn_mostrarDataEncoding", "n_clicks")
+)
+def show_codigo(ncliks_modelo, ncliks_data_encoding, ncliks_modelo_state, ncliks_data_encoding_state):
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        return html.Div()
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    if button_id == "btn_mostrarModelo":
+        return html.Div([html.Iframe(src='/ModelNotebook/', className="iframeNotebook")])
+    elif button_id == "btn_mostrarDataEncoding":
+        return html.Div([html.Iframe(src='/DataEncoderNotebook/', className="iframeNotebook")])
+    return html.Div()
+
+@app.callback(
+    Output("toggle-content", "style"),
+    Input("toggle-button", "n_clicks"),
+)
+def toggle_visibility(n_clicks):
+    if n_clicks!= None and n_clicks % 2 == 0:
+        return {'display': 'none'}
+    else:
+        return {'display': 'block'}
 
 def button(id,titulo):
     return dbc.Button(titulo,id=id,className='button_Model')
@@ -352,5 +389,5 @@ def inputs_predict(*args) :
     return div_table,div_resul
 
 layout = html.Div([
-    title, div_models,div_best_model
+    title,div_ipynb, div_models,div_best_model
 ],className='body_model')
