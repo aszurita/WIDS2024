@@ -6,13 +6,14 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 # Pages
-from pages import analisis, modelo,home
+from pages import analisis,modelo,home,eda
 
 dropdown = dbc.DropdownMenu(
     children=[
         dbc.DropdownMenuItem("Inicio", href="/home",    className='text-xlarge'),
         dbc.DropdownMenuItem("Analisis", href="/analisis",    className='text-xlarge'),
         dbc.DropdownMenuItem("Modelo", href="/modelo",    className='text-xlarge'),
+        dbc.DropdownMenuItem("Eda", href="/eda",    className='text-xlarge'),
     ],
     nav = True,
     in_navbar = True,
@@ -73,6 +74,8 @@ def display_page(pathname):
         return analisis.layout
     elif pathname == '/modelo':
         return modelo.layout
+    elif pathname == '/eda':
+        return eda.layout
     else:
         return home.layout
 

@@ -13,6 +13,7 @@ from dash_dangerously_set_inner_html import DangerouslySetInnerHTML
 from app import app
 
 training_df  = pd.read_csv("assets/data/training.csv")
+training_df['DiagPeriodL90D'] = training_df['DiagPeriodL90D'].map({1: "Si", 0: "No"})
 corre_df=pd.read_csv("assets/data/correlaciones.csv")
 df_encoder = pd.read_csv('assets/data/df_encoder.csv')
 df_states=pd.read_csv('assets/data/df_states.csv')
@@ -527,9 +528,14 @@ reace_fig=html.Div([
             dcc.Graph(figure=fig_race(df_race))
         ],className='rounded-graph')    
     ])
+# layout = html.Div(
+#     [links,titulo,tipo_datos,fast_analisis,fast_analisis2,div_correlation,div_graficas_features,
+#     final,subTitulo,div_graficorre,analisi_corre,tiuloMap,grfMapa,sub_tiuloMap,top_state,
+#     sub_tituBmi,state_bmi,titu_tiParti,state_parti,sub_tituParti,labels_parti,titu_Race,reace_fig]
+#     ,className='center body'
+#     )
+
 layout = html.Div(
-    [links,titulo,tipo_datos,fast_analisis,fast_analisis2,div_correlation,div_graficas_features,
-    final,subTitulo,div_graficorre,analisi_corre,tiuloMap,grfMapa,sub_tiuloMap,top_state,
-    sub_tituBmi,state_bmi,titu_tiParti,state_parti,sub_tituParti,labels_parti,titu_Race,reace_fig]
+    [links,titulo,tipo_datos,fast_analisis,fast_analisis2,div_correlation,div_graficas_features]
     ,className='center body'
     )
