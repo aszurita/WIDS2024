@@ -256,24 +256,37 @@ columnas_input = ['patient_race', 'payer_type', 'patient_state',
 
 inputs = html.Div([
     html.Div([
-        input_dropdown(columnas_input[0]),
-        input_dropdown(columnas_input[1]),
-        input_dropdown(columnas_input[2]),
-        input_dropdown(columnas_input[3]),
-    ],className='row_inputs'),
+        html.Label("Información Personal",className="title_inputs"),
+        html.Div([
+            input_dropdown(columnas_input[0]),
+            input_dropdown(columnas_input[1]),
+            input_dropdown(columnas_input[2]),
+        ],className='row_inputs'),
+        html.Div([
+            input_dropdown(columnas_input[3]),
+            input_dropdown(columnas_input[4]),
+            input_dropdown(columnas_input[5]),
+        ],className='row_inputs'),
+        html.Div([
+            input_dropdown(columnas_input[6]),
+            input_dropdown(columnas_input[9]),
+            input_dropdown(columnas_input[10]),
+        ],className='row_inputs'),
+    ],className="flex-col"),
     html.Div([
-        input_dropdown(columnas_input[4]),
-        input_dropdown(columnas_input[5]),
-        input_dropdown(columnas_input[6]),
-        input_dropdown(columnas_input[7]),
-    ],className='row_inputs'),
+        html.Label("Información Medica",className="title_inputs"),
+        html.Div([
+            input_dropdown(columnas_input[7]),
+            input_dropdown(columnas_input[8]),
+            input_dropdown(columnas_input[9]),
+
+        ],className='row_inputs'),
+        html.Div([
+            input_dropdown(columnas_input[10]),
+            input_dropdown(columnas_input[11]),
+        ],className='row_inputs'),
+    ],className="flex-col"),
     html.Div([
-        input_dropdown(columnas_input[8]),
-        input_dropdown(columnas_input[9]),
-        input_dropdown(columnas_input[10]),
-    ],className='row_inputs'),
-    html.Div([
-        input_dropdown(columnas_input[11]),
         button_model
     ],className='row_inputs'),
 ],className='col_inputs')
@@ -367,7 +380,7 @@ def inputs_predict(*args) :
             'textAlign': 'center',
             'overflow': 'hidden',
             'textOverflow': 'ellipsis',
-            'minWidth': '300px', 'width': '180px', 'maxWidth': '400px',
+            'minWidth': '300px', 'width': '180px', 'maxWidth': '350px',
         })
         div_table_features = html.Div(table_features,className="col_table")
         div_table = [title,div_table_features]
@@ -382,10 +395,19 @@ def inputs_predict(*args) :
         })
         fig_probabilidad = px.pie(data, values='Probabilidad', names='Categoria', title='Probabilidad de ser diagnosticado'.title(),color='Categoria',
                                 color_discrete_map={'BENIGN':'rgb(26, 77, 128)','MALIGNANT':'rgb(128, 26, 26)'})
+        fig_probabilidad.update_layout(
+        title="Probabilidad De Ser Diagnosticado",
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1,
+            xanchor="center",
+            x=0.5
+        )
+        )
         title_result= html.Label('Resultado',className='label_table')
-        figrure = dcc.Graph(figure=fig_probabilidad,className="graph_res2")
-        div_figrure = html.Div([figrure],className="rounded-graph")
-        div_resul = [title_result,div_figrure]
+        figrure = dcc.Graph(figure=fig_probabilidad,className='rounded-graph tamaño')
+        div_resul = [title_result,figrure]
     return div_table,div_resul
 
 layout = html.Div([

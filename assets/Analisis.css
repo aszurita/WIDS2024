@@ -109,8 +109,8 @@ Array
 
 .button-graficar {
     position: absolute;
-    top: 65px;
-    right: 50px;
+    top: 80 px;
+    right: 45%;
     padding: 10px;
     border-radius: 25%;
     background-color: rgb(73, 213, 159);
@@ -178,9 +178,10 @@ Array
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    width: 700px;
+    width: 500px;
     border-radius: 15px;
-    gap: 50px;
+    gap: 35px;
+    position: relative;
 }
 .label_features{
     font-size: x-large;
@@ -188,7 +189,7 @@ Array
     border-radius: 30px;
 }
 .features{
-    width: 600px;
+    width: 90%;
     height: 300px;
     display: flex;
     flex-wrap: wrap;
@@ -224,7 +225,6 @@ Array
     justify-content: center;
     align-items: center;
     text-align: center;
-    width: 90%;
 }
 
 .div_resumen_general{
@@ -235,6 +235,7 @@ Array
     gap: 30px;
     padding: 30px 0px;
 }
+
 .resumen{
     height:600px;
     width: 100%;
@@ -252,17 +253,6 @@ Array
     padding: 4px;
     box-shadow: 5px 5px 10px grey;
     background-color: rgb(255, 255, 255);
-    width: 90%;
-    margin: auto;
-}
-
-.rounded-graph .rdg2 {
-    border: 2px solid black;
-    border-radius: 15px;
-    padding: 4px;
-    box-shadow: 5px 5px 10px grey;
-    background-color: rgb(255, 255, 255);
-    width: 50%;
     margin: auto;
 }
 
@@ -279,6 +269,11 @@ Array
     aspect-ratio: auto;
     max-width: 700px;
     width: 80%;
+    transition: transform 0.3s ease-in-out;
+}
+.imagen_eda:hover{
+    padding: 20px;
+    transform: translateY(-10px);
 }
 
 .label_eda{
@@ -344,4 +339,23 @@ Array
         padding: 0px;
         margin: 0px;
     }
+}
+
+::-webkit-scrollbar {
+    width: 0px; 
+    height: 0px;
+}
+
+
+html {
+    scrollbar-width: none; 
+}
+
+body {
+    overflow: -moz-scrollbars-none; 
+}
+
+.title_inputs{
+    font-size: xx-large;
+    font-weight: bold;
 }

@@ -24,27 +24,29 @@ dropdown = dbc.DropdownMenu(
 navbar = dbc.Navbar(
     dbc.Container(
         [
-            html.A([
-                    html.Img(src="assets/images/wids-logo.png", height="70px",width='200px',className="image_responsive"),               
-                    html.Label("WIDS DATATHON 2024",className='title-navbar title-navbarResponsive')
-                ],
-                className="row_navbar",
+            html.A(
+                dbc.Row(
+                    [
+                        dbc.Col(html.Img(src="assets/images/Logo_wids2024.png", height="90px",width='300px')),                   
+                        dbc.Col(dbc.NavbarBrand("WIDS DATATHON 2024",className='title-navbar')),
+                    ],
+                    align='center',
+                ),
                 href="/home",
             ),
             dbc.NavbarToggler(id="navbar-toggler2"),
             dbc.Collapse(
                 dbc.Nav(
-                    # right align dropdown menu with ml-auto className
                     [dropdown], navbar=True
                 ),
                 id="navbar-collapse2",
                 navbar=True,
                 style={'justifyContent':'flex-end'},
             ),
-        ],className="div_center"
+        ]
     ),
     color='Info',
-    className="navbar navbar-responsive",
+    className="navbar",
 )
 
 def toggle_navbar_collapse(n, is_open):
