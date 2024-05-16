@@ -109,7 +109,7 @@ Array
 
 .button-graficar {
     position: absolute;
-    top: 80 px;
+    top: 100px;
     right: 45%;
     padding: 10px;
     border-radius: 25%;
@@ -247,7 +247,7 @@ Array
     font-weight: bold;
 }
 
-.rounded-graph {
+.rounded-graph2 {
     border: 2px solid black;
     border-radius: 15px;
     padding: 4px;

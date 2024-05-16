@@ -39,20 +39,20 @@ div_graficorre=html.Div([
 
 sct2_1=html.Div([
         html.Div([
-            dcc.Graph(id='fig_sca1')
-        ],className='rounded-graph'),
+            dcc.Graph(id='fig_sca1',className="rounded-graph2")
+        ]),
         html.Div([
-            dcc.Graph(id='fig_sca2')
-        ],className='rounded-graph')
+            dcc.Graph(id='fig_sca2',className="rounded-graph2")
+        ])
     ], className='center_row_around')
 
 sct2_2=html.Div([
         html.Div([
-            dcc.Graph(id='fig_sca3')
-        ],className='rounded-graph'),
+            dcc.Graph(id='fig_sca3',className="rounded-graph2")
+        ]),
         html.Div([
-            dcc.Graph(id='fig_sca4')
-        ],className='rounded-graph')
+            dcc.Graph(id='fig_sca4',className="rounded-graph2")
+        ])
     ], className='center_row_around', style={'padding-top': '60px'})
 @app.callback(
     [
@@ -85,7 +85,7 @@ def sinOutlier(df, label):
 
 def gfScaBox(df, label1, label2, categ,titulo):
     fig = px.scatter(df, x=label1, y=label2, color=categ, marginal_y="box",
-                     marginal_x="box")
+                    marginal_x="box")
     fig.update_layout( title=titulo)
     return fig
 
@@ -100,13 +100,13 @@ analisi_corre=html.Div([html.Br(),
         ])])
 
 pilas= html.Div([
-            html.Div([html.Div([
-                dcc.Graph(id='fig_posi',config={'responsive': True}),
-            ],className='another-container')],className='centered-container2'),
-            html.Div([html.Div([
-                dcc.Graph(id='fig_nega',config={'responsive': True}),
-            ],className='another-container')],className='centered-container2')
-        ],className='center')
+            html.Div([
+                dcc.Graph(id='fig_posi',className="rounded-graph2"),
+            ],className='another-container'),
+            html.Div([
+                dcc.Graph(id='fig_nega',className="rounded-graph2"),
+            ],className='another-container')
+        ],className='center width_8')
 
 @app.callback(
     [Output('colMayorCorr', 'children'),
