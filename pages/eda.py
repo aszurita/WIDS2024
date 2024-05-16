@@ -24,11 +24,11 @@ def armar_scatter(df_corre, label, df):
     df_corre_filtered = df_corre[df_corre['source'] == label]
     x_values = df_corre_filtered['source']
     y_values = df_corre_filtered['target']
-    listaScatt = [px.scatter(df, x=x_value, y=y_value) for x_value, y_value in zip(x_values, y_values)]
+    custom_colors = ['green','orange','red', 'green', 'blue']
+    listaScatt = [px.scatter(df, x=x_value, y=y_value, color_discrete_sequence=[color]) for x_value, y_value, color in zip(x_values, y_values, custom_colors)]
     return listaScatt
 
 labelcorre=''
-
 
 div_graficorre=html.Div([
         html.Div([
@@ -53,7 +53,7 @@ sct2_2=html.Div([
         html.Div([
             dcc.Graph(id='fig_sca4')
         ],className='rounded-graph')
-    ], className='center_row_around')
+    ], className='center_row_around', style={'padding-top': '60px'})
 @app.callback(
     [
     Output('fig_sca1', 'figure'),
@@ -86,7 +86,7 @@ def sinOutlier(df, label):
 def gfScaBox(df, label1, label2, categ,titulo):
     fig = px.scatter(df, x=label1, y=label2, color=categ, marginal_y="box",
                      marginal_x="box")
-    fig.update_layout(width=720, title=titulo,height=500)
+    fig.update_layout( title=titulo)
     return fig
 
 analisi_corre=html.Div([html.Br(),
@@ -97,20 +97,19 @@ analisi_corre=html.Div([html.Br(),
             html.Br(),
             dcc.Dropdown(object_cols, id='drdw2Corre',className='dropdown-feature',value=object_cols[0]),
             html.Br()
-        ]),
-        html.Div([
-            html.Div([
-                dcc.Graph(id='fig_posi'),
-            ],className='rounded-graph'),
-            html.Div([
-                dcc.Graph(id='fig_nega'),
-            ],className='rounded-graph')
-        ],className='row_gr')
-    ],className='center')
+        ])])
+
+pilas= html.Div([
+            html.Div([html.Div([
+                dcc.Graph(id='fig_posi',config={'responsive': True}),
+            ],className='another-container')],className='centered-container2'),
+            html.Div([html.Div([
+                dcc.Graph(id='fig_nega',config={'responsive': True}),
+            ],className='another-container')],className='centered-container2')
+        ],className='center')
 
 @app.callback(
     [Output('colMayorCorr', 'children'),
-
     Output('fig_posi', 'figure'),
     Output('fig_nega', 'figure')],
     [Input('drdw2Corre','value')])
@@ -121,7 +120,6 @@ def update_graph(drdw2Corre):
     df_positivo = training_df[training_df['DiagPeriodL90D'] == 'Si']
     df_negativo = training_df[training_df['DiagPeriodL90D'] == 'No']
     titMayorCor=f'{titleMayorCor[0].title()} - {titleMayorCor[1].title()}: {titleMayorCor[2]}'
-    #list_scatt=armar_scatter(corre_df,dropdown1Corre,training_df)
     return titMayorCor,gfScaBox(df_positivo,titleMayorCor[0],titleMayorCor[1],drdw2Corre,'Diagnostico Positivo'),gfScaBox(df_negativo,titleMayorCor[0],titleMayorCor[1],drdw2Corre,'Diagnostico Negativo')
 
 tiuloMap=html.H1("Analisis por Estados ",className='title_Corre')
@@ -144,15 +142,15 @@ def grfMap(df_state_value):
             title='Cantidad',
             tickvals=[i for i in range(0, int(df_state_value['Value'].max())+1, 250)]
         ),
-        width=800, 
-        height=500 
+        #width=800, 
+        #height=500 
     )
     return fig
 
 grfMapa=html.Div([
-            html.Div([
+    html.Div([ html.Div([
                 dcc.Graph(figure=grfMap(df_states))
-            ],className='rounded-graph')   
+            ],className='rounded-graph')  ],className='centered-container')
         ],className='center')
 
 def top_states(df_state_value,stateData):
@@ -162,7 +160,7 @@ def top_states(df_state_value,stateData):
                     color_discrete_sequence=px.colors.qualitative.Pastel,
                     title='TOP 10 States with the highest percentage of being diagnosed before 90 days'.title(),
                     labels={stateData:'Percentage'},
-                    text_auto=True,hover_data={'Diagnostic90D':True},width=850,height=500 )
+                    text_auto=True,hover_data={'Diagnostic90D':True})
     return top10_yesdiag_bar
 
 sub_tiuloMap=html.Div(html.H3("Top de los Estados".title(),className='subtitutlo-analisis'),className='left-align')
@@ -173,11 +171,12 @@ top_state=html.Div([
             id='rd_topSta',
             options=['Positivo','Negativo'],
             value='Positivo',  
-            labelStyle={'padding': '10px', 'margin-right': '10px', 'display': 'inline-block'})]),
-        html.Div([
+            #labelStyle={'padding': '10px', 'margin-right': '10px', 'display': 'inline-block'}
+            )
+            ])])
+grafTop=html.Div([html.Div([
             dcc.Graph(id='grf_top')
-        ],className='rounded-graph')    
-    ])
+        ],className='rounded-graph') ],className='centered-container3')   
 @app.callback(
     Output('grf_top','figure'),
     Input('rd_topSta','value')
@@ -199,7 +198,7 @@ def grf_bmiState(df_bmi):
                                  labels={'value':'Median BMI','variable':''},text_auto=True,orientation='h',
                                  color_discrete_sequence=px.colors.qualitative.Pastel,color = 'State',
                                   hover_name='State',hover_data={'State': False}, title='Bmi By State'.title() )
-    fig_barrmode_bmi_state.update_layout(height=1700, width=850)
+    #fig_barrmode_bmi_state.update_layout(height=1700, width=850)
     fig_barrmode_bmi_state.update_traces(width=0.7)
     return fig_barrmode_bmi_state
 
@@ -207,9 +206,9 @@ sub_tituBmi=html.Div(html.H3("Visulización de media de bmi por estado".title(),
 
 state_bmi=html.Div([
         html.Div([
-            dcc.Graph(figure=grf_bmiState(bmi_state(training_df)))
+            dcc.Graph(figure=grf_bmiState(bmi_state(training_df)),config={'responsive': True})
         ],className='rounded-graph')    
-    ])
+    ],className='centered-container')
 
 def top_PromedioParti(df_state_value,training_df):
     df_top_meanPM25 = df_state_value.sort_values(by='meanPM25', ascending=False)
@@ -231,7 +230,7 @@ def grf_boxPart(df_filtradoPorTOp_posi,df_filtradoPorTOp_nega):
             else:
                 fig.add_trace(go.Box(x=df_filtradoPorTOp_nega['patient_state'], y=df_filtradoPorTOp_nega[lista_labe[y]],name=lista_nombres[y+3], marker_color=lista_colors[y+3]),row=x+1, col=y+1)
     fig.update_traces(quartilemethod="exclusive")
-    fig.update_layout(width=800,height=600,title_text='Dispersion de particulas agrupados por estados')
+    #fig.update_layout(width=800,height=600,title_text='Dispersion de particulas agrupados por estados')
     return fig
 
 titu_tiParti=html.H1("Analisis por Particulas ",className='title_Corre')
@@ -242,7 +241,7 @@ state_parti=html.Div([
         html.Div([
             dcc.Graph(figure=grf_boxPart(df_parti[0],df_parti[1]))
         ],className='rounded-graph')    
-    ])
+    ],className='centered-container')
 
 def scatter_parti(df_state_value,label):
     fig = px.scatter(df_state_value, x=label, y='StateDiagnostic90DPercentage',color='State',
@@ -265,11 +264,12 @@ labels_parti=html.Div([
                 {'label': 'NO2', 'value': 'meanN02'},
                 {'label': 'PM25', 'value': 'meanPM25'},
                 {'label': 'Ozono', 'value': 'meanOzone'},
-   ], id='ddw_parti',className='dropdown-feature',value='meanN02'),
+            ], id='ddw_parti',className='dropdown-feature',value='meanN02'),
         ]), html.Br(),
         html.Div([
-            dcc.Graph(id='fig_scatter')],className='rounded-graph')
-    ],className='center')
+            html.Div([dcc.Graph(id='fig_scatter',config={'responsive': True})],className='rounded-graph')
+            ],className='centered-container')  
+    ],className='center ')
 
 @app.callback(
     Output('fig_scatter', 'figure'),
@@ -299,11 +299,12 @@ def fig_race(df_race):
 titu_Race=html.H1("Analisis por Raza",className='title_Corre')
 reace_fig=html.Div([
         html.Div([
-            dcc.Graph(figure=fig_race(df_race))
+            dcc.Graph(figure=fig_race(df_race),config={'responsive': True})
         ],className='rounded-graph')    
-    ])
+    ],className='centered-container')
 
 layout = html.Div([
-   subTitulo,div_graficorre,sct2_1,sct2_2,analisi_corre,tiuloMap,grfMapa,sub_tiuloMap,top_state,
+     html.Link(href='/assets/css/Eda.css', rel='stylesheet'),
+   subTitulo,div_graficorre,sct2_1,sct2_2,analisi_corre,pilas,tiuloMap,grfMapa,sub_tiuloMap,top_state,grafTop,
      sub_tituBmi,state_bmi,titu_tiParti,state_parti,sub_tituParti,labels_parti,titu_Race,reace_fig
 ],className='body_model')
