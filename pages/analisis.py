@@ -62,7 +62,7 @@ def bar_tipoDatos():
 tipo_datos = html.Div([
     html.H3('Tipos De Datos',className='title_Corre'),
     html.Div([
-        dcc.Graph(figure=bar_tipoDatos(),className="rounded-graph")
+        dcc.Graph(figure=bar_tipoDatos(),className="rounded-graph2")
     ],className='center_figure'),
     html.Div([
         div_listfeatures('Categóricas',object_cols),
