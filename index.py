@@ -1,76 +1,26 @@
-from app import server,app
-from dash import Dash, dcc, html
-from dash.dependencies import Input, Output, State
-from dash.exceptions import PreventUpdate
-import dash_bootstrap_components as dbc
-import plotly.express as px
-import pandas as pd
-# Pages
-from pages import analisis,modelo,home,eda
+from dash import dcc, html
+from dash.dependencies import Input, Output
+from app import app
+from pages import analisis, modelo, home, eda
 
-dropdown = dbc.DropdownMenu(
-    children=[
-        dbc.DropdownMenuItem("Inicio", href="/home",    className='text-xlarge'),
-        dbc.DropdownMenuItem("Analisis", href="/analisis",    className='text-xlarge'),
-        dbc.DropdownMenuItem("Modelo", href="/modelo",    className='text-xlarge'),
-        dbc.DropdownMenuItem("Eda", href="/eda",    className='text-xlarge'),
-    ],
-    nav = True,
-    in_navbar = True,
-    label = "Secciones",
-    className='text-xlarge'
-)
-
-navbar = dbc.Navbar(
-    dbc.Container(
-        [
-            html.A(
-                dbc.Row(
-                    [
-                        dbc.Col(html.Img(src="assets/images/Logo_wids2024.png", height="90px",width='300px')),                   
-                        dbc.Col(dbc.NavbarBrand("WIDS DATATHON 2024",className='title-navbar')),
-                    ],
-                    align='center',
-                ),
-                href="/home",
-            ),
-            dbc.NavbarToggler(id="navbar-toggler2"),
-            dbc.Collapse(
-                dbc.Nav(
-                    [dropdown], navbar=True
-                ),
-                id="navbar-collapse2",
-                navbar=True,
-                style={'justifyContent':'flex-end'},
-            ),
-        ]
-    ),
-    color='Info',
-    className="navbar",
-)
-
-def toggle_navbar_collapse(n, is_open):
-    if n:
-        return not is_open
-    return is_open
-
-for i in [2]:
-    app.callback(
-        Output(f"navbar-collapse{i}", "is_open"),
-        [Input(f"navbar-toggler{i}", "n_clicks")],
-        [State(f"navbar-collapse{i}", "is_open")],
-    )(toggle_navbar_collapse)
-
-# embedding the navigation bar
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
-    navbar,
-    html.Div(id='page-content')
-],className='background')
+    html.Div([
+        html.Img(src='/assets/images/Logo_wids2024.png', className='logo'),
+        html.Nav([
+            dcc.Link('Inicio', href='/home'),
+            dcc.Link('Análisis', href='/analisis'),
+            dcc.Link('Modelo', href='/modelo'),
+            dcc.Link('Eda', href='/eda'),
+            
+        ], className='navbar'),
+    ], className='div_nav'),
+    html.Div(id='page-content', className='div_carrusel')
+], className= 'div_general')
 
 
 @app.callback(Output('page-content', 'children'),
-            [Input('url', 'pathname')])
+              [Input('url', 'pathname')])
 def display_page(pathname):
     if pathname == '/analisis':
         return analisis.layout
@@ -82,4 +32,4 @@ def display_page(pathname):
         return home.layout
 
 if __name__ == '__main__':
-    app.run_server(host='127.0.0.1', debug=True)
+    app.run_server(debug=True)

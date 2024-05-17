@@ -25,10 +25,11 @@
     font-weight: bold;
     font-size: large;
     border-radius: 30px;
-    background-color: blue;
-    color: white;
+    border: 2px solid rgb(71, 69, 216);;
+    color: rgb(35, 32, 177);
     padding: 20px;
     width: 300px;
+    background-color: white;
 }
 .Row_buttons{
     display: flex;
@@ -53,7 +54,7 @@
     align-items: center;
     width: 80%;
     border-radius: 30px;
-    background-color: #1d95b3;
+    
 }
 
 .div_models{
@@ -65,7 +66,7 @@
     position: relative;
     width: 80%;
     border-radius: 30px;
-    background-color: #1d95b3;
+    
     margin-bottom: 30px;
     padding-bottom: 20px;
 }
@@ -83,7 +84,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #44bb6c;
+    border: 4px solid #44bb6c;
+    border-radius: 15px;
+    
 }
 
 .columns-info{
@@ -257,6 +260,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    margin-left: 40px;
 }
 .px{
     text-align: justify;
@@ -266,6 +270,7 @@
 .row-model{
     display: flex;
     flex-direction: row;
+
 }
 .label_acc_best{
     font-size: x-large;
@@ -299,6 +304,10 @@
     height: 300px;
     border-radius: 20px;
     background-color:burlywood;
+    word-wrap: break-word;  /* Ajusta el texto al tamaño del div */
+    word-break: break-word; /* Rompe las palabras largas si es necesario */
+    overflow-wrap: break-word; /* Para asegurar el ajuste del texto */
+    white-space: normal;
 }
 
 .row_inputs{

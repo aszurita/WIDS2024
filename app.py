@@ -1,11 +1,16 @@
-import dash
+from dash import Dash, dash
 import dash_bootstrap_components as dbc
 import flask 
-external_stylesheets = [dbc.themes.YETI]  
+external_stylesheets = [dbc.themes.YETI] 
+
+
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.config.suppress_callback_exceptions = True
+
+app.css.append_css({
+    "external_url": "/assets/style.css"})
 
 @server.route('/ModelNotebook/')
 def serve_model_notebook():

@@ -11,7 +11,7 @@ warnings.filterwarnings('ignore')
 from summarytools import dfSummary
 from dash_dangerously_set_inner_html import DangerouslySetInnerHTML
 from app import app
-
+html.Link(rel='stylesheet', href='/assets/all_event.css')
 training_df  = pd.read_csv("assets/data/training.csv")
 training_df['DiagPeriodL90D'] = training_df['DiagPeriodL90D'].map({1: "Si", 0: "No"})
 corre_df=pd.read_csv("assets/data/correlaciones.csv")
@@ -24,7 +24,7 @@ links = html.Div([
     html.A(html.Label('Correlaciones',className='link'),href='#correlacion'),
     html.A(html.Label('Distribuciones',className='link'),href='#distribucion'),
     html.A(html.Label('Seccion4',className='link'),href='#id4'),
-],className='row_header')
+],className='row_head')
 
 titulo  =  html.H1("ANÁLISIS EXPLORATORIO DE DATOS".title(),className='titutlo-analisis')
 
@@ -535,7 +535,8 @@ reace_fig=html.Div([
 #     ,className='center body'
 #     )
 
-layout = html.Div(
-    [links,titulo,tipo_datos,fast_analisis,fast_analisis2,div_correlation,div_graficas_features]
+layout = html.Div([
+        html.Link(rel='stylesheet', href='/assets/Analisis.css'),
+        links,titulo,tipo_datos,fast_analisis,fast_analisis2,div_correlation,div_graficas_features]
     ,className='center body'
     )

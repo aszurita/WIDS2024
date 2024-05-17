@@ -5,42 +5,22 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 
+from dash.dependencies import Input, Output, ALL
+from app import app
+
 df = pd.read_csv("assets/data/colum.csv", sep="|")
 
-# Componentes HTML y CSS
-titleGeneral = html.Div([
-    dbc.Container([
-        dbc.Row([
-            dbc.Col(html.H1("Welcome to the ESPOL dashboard", className='titutlo-analisis titutlo_responsive')
-                    , className="mb-4 mt-4")
-        ]),
-    ])
-],className="divtitle_responsive")
+carousel_items = [
+    {"key": "1", "src": "/assets/images/wids1.jpg", "title": "Dathaton", "text": "WIDS Espol 2024"},
+    {"key": "2", "src": "/assets/images/wids2.jpg", "title": "Datathon WiDS Espol", "text": "Es una competencia de ciencia de datos que ofrece a los estudiantes la oportunidad de sumergirse en el análisis de datos. Busca inspirar a la próxima generación de científicos de datos y promover un cambio en la resolución de problemas mediante el uso de datos."},
+    {"key": "3", "src": "/assets/images/wids3.jpeg", "title": "Temas a Tratar", "text": "-Predicción Temprana, Factores Demográficos y Ambientales, Accesibilidad al Tratamiento, e Innovaciones en Análisis de Datos"},
+    {"key": "4", "src": "/assets/images/wids4.jpg", "title": "Únete y usa tus skills ", "text": "de data para luchar contra el cáncer más rápido."},
+]
 
-carousel = dbc.Carousel(
-    items=[
-        {
-            "key": "1", 
-            "src": "/assets/images/wids.png",
-            "style": {
-                "border-radius": "15px",
-                "width": "200px", 
-                "height": "100px",  
-                "margin": "auto"  
-            }
-        },
-    ],
-    controls=False,
-    indicators=False,
-    interval=2000,
-    ride="carousel",
-    style={
-        "border": "2px solid white",  
-        "border-radius": "15px", 
-        "overflow": "hidden" 
-    }
-    ,className="carousel"
-)
+indicators = html.Div([
+    html.Span(id={'type': 'carousel-indicator', 'index': idx}, className='carousel-indicator')
+    for idx in range(len(carousel_items))
+], className='carousel-indicators')
 
 infoDat = html.Div(
     [
@@ -120,6 +100,39 @@ tablaColum=html.Div(
         )
     ]
 )
+
 layout = html.Div([
-    titleGeneral,carousel,infoDat,tablaColum
-],className='body_model')
+    dcc.Interval(id='interval-component', interval=8*1000, n_intervals=0),
+    html.Div(id='carousel-content', className='carousel'),
+    indicators, infoDat,tablaColum
+], className='div_general')
+
+@app.callback(
+    [Output('carousel-content', 'children'),
+     Output({'type': 'carousel-indicator', 'index': ALL}, 'className')],
+    [Input('interval-component', 'n_intervals'),
+     Input({'type': 'carousel-indicator', 'index': ALL}, 'n_clicks')]
+)
+def update_carousel(n_intervals, n_clicks):
+    # Determine the index of the current item
+    if any(n_clicks):
+        idx = n_clicks.index(1)
+    else:
+        idx = n_intervals % len(carousel_items)
+    
+    item = carousel_items[idx]
+
+    carousel = html.Div([
+        html.Div([
+            html.H1(item["title"], style={'margin': '0'}, className='h1_texto'),
+            html.P(item["text"], style={'margin': '0'}, className= 'p_texto')
+        ], className='carousel-text'),
+        html.Img(src=item["src"])
+        
+        
+    ], className='carousel')
+
+    indicators_class = ['carousel-indicator'] * len(carousel_items)
+    indicators_class[idx] += ' active'
+
+    return carousel, indicators_class
