@@ -112,12 +112,13 @@ Array
     position: absolute;
     top: 100px;
     right: 45%;
-    padding: 10px;
-    border-radius: 25%;
-    background-color: rgb(73, 213, 159);
+    padding: 20px;
+    border-radius: 40px;
+    background-color: #1d95b3;
     width: 150px;
-    font-size: large;
+    font-size: 25px;
     font-weight: bold;
+    margin-top: 15px;
 }
 
 .mt-30{
